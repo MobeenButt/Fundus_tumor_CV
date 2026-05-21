@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundus Tumor Classifier - v94</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        .upload-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .upload-box {
+            border: 2px dashed #667eea;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9ff;
+        }
+
+        .upload-box:hover {
+            border-color: #764ba2;
+            background: #f0f2ff;
+        }
+
+        .upload-box.dragging {
+            border-color: #764ba2;
+            background: #e8ebff;
+            transform: scale(1.02);
+        }
+
+        .upload-box svg {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .upload-box p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .upload-box .highlight {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .results-section {
+            display: none;
+        }
+
+        .results-section.show {
+            display: block;
+        }
+
+        .image-preview {
+            width: 100%;
+            max-height: 300px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            object-fit: contain;
+            background: #f8f9ff;
+            padding: 10px;
+        }
+
+        .result-card {
+            background: white;
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .result-card.top {
+            border: 2px solid #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-label .badge {
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .result-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .result-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .result-percent {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .info-box {
+            background: #f0f2ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            color: #333;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .error {
+            background: #fee;
+            border: 2px solid #f88;
+            color: #c33;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f0f0f0;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .filename {
+            color: #666;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .all-results {
+            margin-top: 20px;
+        }
+
+        .all-results h3 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 Fundus Tumor Classifier</h1>
+            <p>Model v94 - EfficientNet-B0 | Powered by AI</p>
+        </div>
+
+        <div class="content">
+            <!-- Upload Section -->
+            <div class="upload-section">
+                <h2>📷 Upload Image</h2>
+                
+                <div class="error" id="errorBox"></div>
+                
+                <div class="upload-box" id="uploadBox">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <p>Drag your image here</p>
+                    <p>or <span class="highlight">click to browse</span></p>
+                    <p style="font-size: 12px; color: #999; margin-top: 10px;">JPG, PNG, BMP supported</p>
+                </div>
+
+                <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.bmp" />
+
+                <div class="button-group">
+                    <button class="btn-primary" id="selectBtn">Choose File</button>
+                    <button class="btn-secondary" id="clearBtn">Clear</button>
+                </div>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Analyzing image...</p>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="resultsSection">
+                <h2>🎯 Results</h2>
+                <img id="previewImage" class="image-preview" />
+                <p class="filename" id="filename"></p>
+
+                <div class="result-card top" id="topPredictionCard"></div>
+
+                <div class="all-results">
+                    <h3>All Predictions</h3>
+                    <div id="allResults"></div>
+                </div>
+
+                <div class="info-box" id="infoBox"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const uploadBox = document.getElementById('uploadBox');
+        const fileInput = document.getElementById('fileInput');
+        const selectBtn = document.getElementById('selectBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const resultsSection = document.getElementById('resultsSection');
+        const errorBox = document.getElementById('errorBox');
+        const loading = document.getElementById('loading');
+        const previewImage = document.getElementById('previewImage');
+        const filename = document.getElementById('filename');
+        const topPredictionCard = document.getElementById('topPredictionCard');
+        const allResults = document.getElementById('allResults');
+        const infoBox = document.getElementById('infoBox');
+
+        // Click to upload
+        selectBtn.addEventListener('click', () => fileInput.click());
+        uploadBox.addEventListener('click', () => fileInput.click());
+
+        // File input change
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        // Drag and drop
+        uploadBox.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadBox.classList.add('dragging');
+        });
+
+        uploadBox.addEventListener('dragleave', () => {
+            uploadBox.classList.remove('dragging');
+        });
+
+        uploadBox.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadBox.classList.remove('dragging');
+            if (e.dataTransfer.files.length > 0) {
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+
+        // Clear
+        clearBtn.addEventListener('click', () => {
+            fileInput.value = '';
+            resultsSection.classList.remove('show');
+            errorBox.classList.remove('show');
+            uploadBox.style.opacity = '1';
+        });
+
+        // Handle file
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                showError('Please upload an image file.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                uploadImage(file);
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        // Upload and predict
+        function uploadImage(file) {
+            errorBox.classList.remove('show');
+            loading.classList.add('show');
+            uploadBox.style.opacity = '0.5';
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/api/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                loading.classList.remove('show');
+                uploadBox.style.opacity = '1';
+
+                if (data.error) {
+                    showError(data.error);
+                    return;
+                }
+
+                displayResults(data, file.name);
+            })
+            .catch(error => {
+                loading.classList.remove('show');
+                uploadBox.style.opacity = '1';
+                showError('Error: ' + error.message);
+            });
+        }
+
+        function displayResults(data, fileName) {
+            // Image preview
+            previewImage.src = 'data:image/jpeg;base64,' + data.image_b64;
+            filename.textContent = 'File: ' + fileName;
+
+            // Top prediction
+            const top = data.prediction;
+            topPredictionCard.innerHTML = `
+                <div class="result-label">
+                    <span style="color: ${top.color}; font-size: 20px;">●</span>
+                    ${top.display}
+                    <span class="badge">TOP</span>
+                </div>
+                <div class="result-bar">
+                    <div class="result-fill" style="width: ${top.prob}%; background-color: ${top.color};"></div>
+                </div>
+                <div class="result-percent">${top.prob.toFixed(2)}%</div>
+            `;
+
+            // All predictions
+            allResults.innerHTML = '';
+            data.all.forEach((pred, idx) => {
+                if (idx > 0) {  // Skip top prediction as it's already shown
+                    const card = document.createElement('div');
+                    card.className = 'result-card';
+                    card.innerHTML = `
+                        <div class="result-label">
+                            <span style="color: ${pred.color}; font-size: 16px;">●</span>
+                            ${pred.display}
+                        </div>
+                        <div class="result-bar">
+                            <div class="result-fill" style="width: ${pred.prob}%; background-color: ${pred.color};"></div>
+                        </div>
+                        <div class="result-percent">${pred.prob.toFixed(2)}%</div>
+                    `;
+                    allResults.appendChild(card);
+                }
+            });
+
+            // Info
+            infoBox.innerHTML = `<strong>ℹ️ ${top.display}:</strong><br>${top.info}`;
+
+            resultsSection.classList.add('show');
+        }
+
+        function showError(message) {
+            errorBox.textContent = '❌ ' + message;
+            errorBox.classList.add('show');
+            resultsSection.classList.remove('show');
+            uploadBox.style.opacity = '1';
+        }
+    </script>
+</body>
+</html>

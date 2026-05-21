@@ -1,0 +1,15 @@
+Accuracy: 94.12%
+
+Classification Report:
+                                    precision    recall  f1-score   support
+
+         Choroidal Hemangioma (CH)       0.80      0.80      0.80        15
+            Choroidal Osteoma (CO)       0.88      0.88      0.88        16
+                            Normal       0.97      1.00      0.98       271
+Retinal Capillary Hemangioma (RCH)       0.88      0.76      0.82        38
+               Retinoblastoma (RB)       0.93      1.00      0.96        51
+               Uveal Melanoma (UM)       0.80      0.47      0.59        17
+
+                          accuracy                           0.94       408
+                         macro avg       0.87      0.82      0.84       408
+                      weighted avg       0.94      0.94      0.94       408
