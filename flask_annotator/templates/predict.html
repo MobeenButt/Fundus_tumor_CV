@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TumorTracer — AI Prediction</title>
+<title>FundusAnnotator — Fundus Tumor Prediction</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -204,8 +204,8 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); min-
 <!-- Header -->
 <header class="header">
   <div class="header-left">
-    <div class="logo">🧠</div>
-    <h1>TumorTracer</h1>
+    <div class="logo">👁️</div>
+    <h1>FundusAnnotator</h1>
     <span class="badge">AI Prediction</span>
   </div>
   <div class="header-right">
@@ -320,28 +320,35 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); min-
     </div>
     <div class="card-body">
       <div class="class-cards">
-        <div class="class-card" style="border-color:#ef444440;">
-          <div><span class="cc-dot" style="background:#ef4444;"></span><span class="cc-name" style="color:#ef4444;">Glioma</span></div>
-          <div class="cc-desc">A malignant tumor originating from glial cells in the brain or spine. Most common primary brain tumor.</div>
+        <div class="class-card" style="border-color:#FF6B6B40;">
+          <div><span class="cc-dot" style="background:#FF6B6B;"></span><span class="cc-name" style="color:#FF6B6B;">Choroidal Hemangioma (CH)</span></div>
+          <div class="cc-desc">A benign vascular tumor of the choroid layer. Usually asymptomatic and slowly growing.</div>
         </div>
-        <div class="class-card" style="border-color:#10b98140;">
-          <div><span class="cc-dot" style="background:#10b981;"></span><span class="cc-name" style="color:#10b981;">Meningioma</span></div>
-          <div class="cc-desc">Tumor arising from the meninges — the membranes surrounding the brain and spinal cord. Usually benign.</div>
+        <div class="class-card" style="border-color:#4ECDC440;">
+          <div><span class="cc-dot" style="background:#4ECDC4;"></span><span class="cc-name" style="color:#4ECDC4;">Choroidal Osteoma (CO)</span></div>
+          <div class="cc-desc">A benign osseous tumor of the choroid. Often discovered incidentally during routine eye examination.</div>
         </div>
-        <div class="class-card" style="border-color:#f59e0b40;">
-          <div><span class="cc-dot" style="background:#f59e0b;"></span><span class="cc-name" style="color:#f59e0b;">No Tumor</span></div>
-          <div class="cc-desc">No tumor detected. The brain scan appears normal with no abnormal growths visible.</div>
+        <div class="class-card" style="border-color:#95E1D340;">
+          <div><span class="cc-dot" style="background:#95E1D3;"></span><span class="cc-name" style="color:#95E1D3;">Normal</span></div>
+          <div class="cc-desc">No tumor detected. The fundus appears normal with healthy retinal structures.</div>
         </div>
-        <div class="class-card" style="border-color:#3b82f640;">
-          <div><span class="cc-dot" style="background:#3b82f6;"></span><span class="cc-name" style="color:#3b82f6;">Pituitary</span></div>
-          <div class="cc-desc">Tumor in the pituitary gland at the base of the brain. Usually benign and slow-growing.</div>
+        <div class="class-card" style="border-color:#FFD93D40;">
+          <div><span class="cc-dot" style="background:#FFD93D;"></span><span class="cc-name" style="color:#FFD93D;">Retinal Capillary Hemangioma (RCH)</span></div>
+          <div class="cc-desc">A benign vascular tumor of the retina. May cause visual symptoms if affecting the macula.</div>
+        </div>
+        <div class="class-card" style="border-color:#FF006E40;">
+          <div><span class="cc-dot" style="background:#FF006E;"></span><span class="cc-name" style="color:#FF006E;">Retinoblastoma (RB)</span></div>
+          <div class="cc-desc">A malignant tumor of the retina, primarily affecting children. Early detection is crucial.</div>
+        </div>
+        <div class="class-card" style="border-color:#6A4C9340;">
+          <div><span class="cc-dot" style="background:#6A4C93;"></span><span class="cc-name" style="color:#6A4C93;">Uveal Melanoma (UM)</span></div>
+          <div class="cc-desc">A malignant melanoma of the uveal tract. The most common primary intraocular malignancy in adults.</div>
         </div>
       </div>
       <div style="margin-top:16px; padding:12px; background:#fef9c3; border-radius:var(--radius-sm); border:1px solid #fde68a;">
         <p style="font-size:11px; color:#92400e; line-height:1.6;">
           ⚠️ <strong>Medical Disclaimer:</strong> This tool is for educational and research purposes only.
           It is not a substitute for professional medical diagnosis. Always consult a qualified medical professional for any health concerns.
-          Model accuracy: <strong>95.81%</strong> on test set (EfficientNet-B0, 5600 training images).
         </p>
       </div>
     </div>
@@ -357,10 +364,12 @@ let selectedFile = null;
 let history = [];
 
 const CLASS_ICONS = {
-  glioma:     '🔴',
-  meningioma: '🟢',
-  notumor:    '🟡',
-  pituitary:  '🔵',
+  'choroidal hemangioma (ch)': '🔴',
+  'choroidal osteoma (co)': '🔵',
+  'normal': '✅',
+  'retinal capillary hemangioma (rch)': '🟡',
+  'retinoblastoma (rb)': '⚠️',
+  'uveal melanoma (um)': '🟣',
 };
 
 // ── File handling ─────────────────────────────────────────────────────────────

@@ -14,24 +14,37 @@ from PIL import Image, ImageDraw
 BASE_DIR = Path(__file__).resolve().parent
 ANNOTATIONS_FILE = BASE_DIR / "annotations_flask.json"
 VISUAL_DIR = BASE_DIR / "annotated_images"
-CLASSES = ["Glioma", "Meningioma", "Pituitary", "No Tumor"]
+CLASSES = [
+    "Choroidal Hemangioma (CH)",
+    "Choroidal Osteoma (CO)",
+    "Normal",
+    "Retinal Capillary Hemangioma (RCH)",
+    "Retinoblastoma (RB)",
+    "Uveal Melanoma (UM)",
+]
 CLASS_COLORS = {
-    "Glioma": "#FF0000",
-    "Meningioma": "#00C800",
-    "Pituitary": "#0050FF",
-    "No Tumor": "#DCB400",
+    "Choroidal Hemangioma (CH)": "#FF6B6B",
+    "Choroidal Osteoma (CO)": "#4ECDC4",
+    "Normal": "#95E1D3",
+    "Retinal Capillary Hemangioma (RCH)": "#FFD93D",
+    "Retinoblastoma (RB)": "#FF006E",
+    "Uveal Melanoma (UM)": "#6A4C93",
 }
 CLASS_COLORS_RGB = {
-    "Glioma": (255, 0, 0),
-    "Meningioma": (0, 200, 0),
-    "Pituitary": (0, 80, 255),
-    "No Tumor": (220, 180, 0),
+    "Choroidal Hemangioma (CH)": (255, 107, 107),
+    "Choroidal Osteoma (CO)": (78, 205, 196),
+    "Normal": (149, 225, 211),
+    "Retinal Capillary Hemangioma (RCH)": (255, 217, 61),
+    "Retinoblastoma (RB)": (255, 0, 110),
+    "Uveal Melanoma (UM)": (106, 76, 147),
 }
 FOLDER_TO_CLASS = {
-    "glioma": "Glioma",
-    "meningioma": "Meningioma",
-    "pituitary": "Pituitary",
-    "notumor": "No Tumor",
+    "choroidal hemangioma (ch)": "Choroidal Hemangioma (CH)",
+    "choroidal osteoma (co)": "Choroidal Osteoma (CO)",
+    "normal": "Normal",
+    "retinal capillary hemangioma (rch)": "Retinal Capillary Hemangioma (RCH)",
+    "retinoblastoma (rb)": "Retinoblastoma (RB)",
+    "uveal melanoma (um)": "Uveal Melanoma (UM)",
 }
 
 app = Flask(__name__)
@@ -425,7 +438,7 @@ def api_export_yolo():
 
 # ── Entry point ───────────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    print(f"  TumorTracer - Brain MRI Annotation Tool")
+    print(f"  FundusAnnotator - Fundus Tumor Annotation Tool")
     print(f"  Dataset images: {len(IMAGE_LIST)}")
     print(f"  Annotations file: {ANNOTATIONS_FILE}")
     print(f"  Open: http://127.0.0.1:5050")

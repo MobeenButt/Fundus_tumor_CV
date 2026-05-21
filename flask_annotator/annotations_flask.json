@@ -1,45 +1,56 @@
 {
-  "0": {
-    "idx": 0,
-    "filename": "Tr-gl_1.jpg",
-    "class": "Glioma",
+  "2": {
+    "idx": 2,
+    "filename": "image_1692.jpg",
+    "class": "No Tumor",
     "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\glioma\\Tr-gl_1.jpg",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1692.jpg",
     "boxes": [
       {
-        "x1": 217,
-        "x2": 296,
-        "y1": 104,
-        "y2": 263
-      },
-      {
-        "x1": 57,
-        "x2": 443,
-        "y1": 393,
-        "y2": 500
-      },
-      {
-        "x1": 128,
-        "y1": 91,
-        "x2": 367,
-        "y2": 165
-      },
-      {
-        "x1": 204,
-        "y1": 208,
-        "x2": 327,
-        "y2": 241
+        "x1": 1179,
+        "x2": 2321,
+        "y1": 791,
+        "y2": 2405
       }
     ],
     "labels": [
-      "Glioma",
-      "Glioma",
-      "Glioma",
-      "Glioma"
+      "Choroidal Hemangioma (CH)"
     ],
     "box_types": [
-      "rectangle",
-      "rectangle",
+      "rectangle"
+    ],
+    "segmentations": [
+      {
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:02:18.590756"
+  },
+  "6": {
+    "idx": 6,
+    "filename": "image_1696.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1696.jpg",
+    "boxes": [
+      {
+        "x1": 1125,
+        "x2": 3511,
+        "y1": 463,
+        "y2": 907
+      },
+      {
+        "x1": 1836,
+        "y1": 1721,
+        "x2": 2260,
+        "y2": 2213
+      }
+    ],
+    "labels": [
+      "Choroidal Hemangioma (CH)",
+      "Normal"
+    ],
+    "box_types": [
       "rectangle",
       "rectangle"
     ],
@@ -49,931 +60,467 @@
       },
       {
         "points": []
-      },
-      {
-        "points": []
-      },
-      {
-        "points": []
       }
     ],
-    "timestamp": "2026-05-19 10:05:27.056542"
+    "timestamp": "2026-05-21 16:02:22.272512"
   },
   "7": {
     "idx": 7,
-    "filename": "Tr-gl_1004.jpg",
-    "class": "Glioma",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\glioma\\Tr-gl_1004.jpg",
-    "boxes": [
-      {
-        "x1": 9,
-        "y1": 36,
-        "x2": 458,
-        "y2": 437
-      }
-    ],
-    "labels": [
-      "No Tumor"
-    ]
-  },
-  "37": {
-    "idx": 37,
-    "filename": "Tr-gl_1031.jpg",
-    "class": "Glioma",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\glioma\\Tr-gl_1031.jpg",
-    "boxes": [
-      {
-        "x1": 139,
-        "y1": 53,
-        "x2": 400,
-        "y2": 217
-      }
-    ],
-    "labels": [
-      "Glioma"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 00:14:55.990478"
-  },
-  "7199": {
-    "idx": 7199,
-    "filename": "Te-no_99.jpg",
+    "filename": "image_1697.jpg",
     "class": "No Tumor",
-    "split": "Testing",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Testing\\notumor\\Te-no_99.jpg",
-    "boxes": [
-      {
-        "x1": 20,
-        "x2": 133,
-        "y1": 11,
-        "y2": 51
-      }
-    ],
-    "labels": [
-      "Glioma"
-    ],
-    "box_types": [
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 00:47:07.291730"
-  },
-  "2": {
-    "idx": 2,
-    "filename": "Tr-gl_100.jpg",
-    "class": "Glioma",
     "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\glioma\\Tr-gl_100.jpg",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1697.jpg",
     "boxes": [
       {
-        "x1": 242,
-        "y1": 175,
-        "x2": 437,
-        "y2": 423
+        "x1": 1398,
+        "y1": 1420,
+        "x2": 2711,
+        "y2": 2152
       }
     ],
     "labels": [
-      "Pituitary"
+      "Normal"
     ],
     "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
       "rectangle"
     ],
+    "segmentations": [
+      {
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:00:58.530227"
+  },
+  "8": {
+    "idx": 8,
+    "filename": "image_1698.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1698.jpg",
+    "boxes": [
+      {
+        "x1": 1959,
+        "y1": 1318,
+        "x2": 2821,
+        "y2": 2487
+      }
+    ],
+    "labels": [
+      "Normal"
+    ],
+    "box_types": [
+      "rectangle"
+    ],
+    "segmentations": [
+      {
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:01:01.599936"
+  },
+  "9": {
+    "idx": 9,
+    "filename": "image_1699.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1699.jpg",
+    "boxes": [],
+    "labels": [],
+    "box_types": [],
     "segmentations": [],
-    "timestamp": "2026-05-17 00:51:14.038688"
+    "timestamp": "2026-05-21 16:01:02.537988"
+  },
+  "0": {
+    "idx": 0,
+    "filename": "image_1690.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1690.jpg",
+    "boxes": [
+      {
+        "x1": 1569,
+        "y1": 1495,
+        "x2": 2485,
+        "y2": 2049
+      }
+    ],
+    "labels": [
+      "Normal"
+    ],
+    "box_types": [
+      "rectangle"
+    ],
+    "segmentations": [
+      {
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:02:15.902117"
   },
   "1": {
     "idx": 1,
-    "filename": "Tr-gl_10.jpg",
-    "class": "Glioma",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\glioma\\Tr-gl_10.jpg",
-    "boxes": [
-      {
-        "x1": 179,
-        "y1": 152,
-        "x2": 440,
-        "y2": 401
-      }
-    ],
-    "labels": [
-      "Glioma"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:04:19.409933"
-  },
-  "5199": {
-    "idx": 5199,
-    "filename": "Tr-no_638.jpg",
+    "filename": "image_1691.jpg",
     "class": "No Tumor",
     "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_638.jpg",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1691.jpg",
     "boxes": [
       {
-        "x1": 51,
-        "y1": 43,
-        "x2": 144,
-        "y2": 193
+        "x1": 1644,
+        "y1": 1735,
+        "x2": 2164,
+        "y2": 2412
       }
     ],
     "labels": [
-      "No Tumor"
+      "Normal"
     ],
     "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:05:03.786647"
-  },
-  "3499": {
-    "idx": 3499,
-    "filename": "Tr-pi_368.jpg",
-    "class": "Pituitary",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\pituitary\\Tr-pi_368.jpg",
-    "boxes": [
-      {
-        "x1": 188,
-        "y1": 64,
-        "x2": 391,
-        "y2": 365
-      }
-    ],
-    "labels": [
-      "Pituitary"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:05:39.664485"
-  },
-  "3500": {
-    "idx": 3500,
-    "filename": "Tr-pi_369.jpg",
-    "class": "Pituitary",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\pituitary\\Tr-pi_369.jpg",
-    "boxes": [
-      {
-        "x1": 156,
-        "y1": 28,
-        "x2": 359,
-        "y2": 261
-      }
-    ],
-    "labels": [
-      "Pituitary"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:05:52.350019"
-  },
-  "3501": {
-    "idx": 3501,
-    "filename": "Tr-pi_37.jpg",
-    "class": "Pituitary",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\pituitary\\Tr-pi_37.jpg",
-    "boxes": [
-      {
-        "x1": 58,
-        "y1": 223,
-        "x2": 421,
-        "y2": 411
-      }
-    ],
-    "labels": [
-      "Pituitary"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:06:04.250100"
-  },
-  "3502": {
-    "idx": 3502,
-    "filename": "Tr-pi_370.jpg",
-    "class": "Pituitary",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\pituitary\\Tr-pi_370.jpg",
-    "boxes": [
-      {
-        "x1": 46,
-        "y1": 73,
-        "x2": 346,
-        "y2": 265
-      }
-    ],
-    "labels": [
-      "Pituitary"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:06:22.958161"
-  },
-  "3503": {
-    "idx": 3503,
-    "filename": "Tr-pi_371.jpg",
-    "class": "Pituitary",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\pituitary\\Tr-pi_371.jpg",
-    "boxes": [
-      {
-        "x1": 151,
-        "y1": 102,
-        "x2": 332,
-        "y2": 400
-      }
-    ],
-    "labels": [
-      "Pituitary"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:06:28.939772"
-  },
-  "4225": {
-    "idx": 4225,
-    "filename": "Tr-no_1020.jpg",
-    "class": "No Tumor",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_1020.jpg",
-    "boxes": [
-      {
-        "x1": 41,
-        "y1": 25,
-        "x2": 233,
-        "y2": 221
-      }
-    ],
-    "labels": [
-      "No Tumor"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:08:05.286921"
-  },
-  "4226": {
-    "idx": 4226,
-    "filename": "Tr-no_1021.jpg",
-    "class": "No Tumor",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_1021.jpg",
-    "boxes": [],
-    "labels": [],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:08:06.921299"
-  },
-  "4237": {
-    "idx": 4237,
-    "filename": "Tr-no_1031.jpg",
-    "class": "No Tumor",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_1031.jpg",
-    "boxes": [
-      {
-        "x1": 36,
-        "y1": 33,
-        "x2": 200,
-        "y2": 228
-      }
-    ],
-    "labels": [
-      "No Tumor"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:08:11.072272"
-  },
-  "4238": {
-    "idx": 4238,
-    "filename": "Tr-no_1032.jpg",
-    "class": "No Tumor",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_1032.jpg",
-    "boxes": [],
-    "labels": [],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:08:11.794278"
-  },
-  "4265": {
-    "idx": 4265,
-    "filename": "Tr-no_1057.jpg",
-    "class": "No Tumor",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_1057.jpg",
-    "boxes": [],
-    "labels": [],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:08:15.887535"
-  },
-  "4262": {
-    "idx": 4262,
-    "filename": "Tr-no_1054.jpg",
-    "class": "No Tumor",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_1054.jpg",
-    "boxes": [
-      {
-        "x1": 67,
-        "y1": 3,
-        "x2": 303,
-        "y2": 353
-      }
-    ],
-    "labels": [
-      "No Tumor"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:08:19.677113"
-  },
-  "4263": {
-    "idx": 4263,
-    "filename": "Tr-no_1055.jpg",
-    "class": "No Tumor",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_1055.jpg",
-    "boxes": [
-      {
-        "x1": 45,
-        "y1": 8,
-        "x2": 151,
-        "y2": 192
-      }
-    ],
-    "labels": [
-      "No Tumor"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:08:24.953073"
-  },
-  "4264": {
-    "idx": 4264,
-    "filename": "Tr-no_1056.jpg",
-    "class": "No Tumor",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_1056.jpg",
-    "boxes": [],
-    "labels": [],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:08:25.606835"
-  },
-  "4268": {
-    "idx": 4268,
-    "filename": "Tr-no_106.jpg",
-    "class": "No Tumor",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_106.jpg",
-    "boxes": [
-      {
-        "x1": 68,
-        "y1": 108,
-        "x2": 192,
-        "y2": 176
-      }
-    ],
-    "labels": [
-      "No Tumor"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:08:27.978498"
-  },
-  "4269": {
-    "idx": 4269,
-    "filename": "Tr-no_1060.jpg",
-    "class": "No Tumor",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_1060.jpg",
-    "boxes": [],
-    "labels": [],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:08:28.685360"
-  },
-  "4273": {
-    "idx": 4273,
-    "filename": "Tr-no_1064.jpg",
-    "class": "No Tumor",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_1064.jpg",
-    "boxes": [
-      {
-        "x1": 31,
-        "y1": 60,
-        "x2": 136,
-        "y2": 161
-      }
-    ],
-    "labels": [
-      "No Tumor"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:08:31.073690"
-  },
-  "4274": {
-    "idx": 4274,
-    "filename": "Tr-no_1065.jpg",
-    "class": "No Tumor",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_1065.jpg",
-    "boxes": [
-      {
-        "x1": 59,
-        "y1": 139,
-        "x2": 164,
-        "y2": 210
-      }
-    ],
-    "labels": [
-      "No Tumor"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:08:34.033571"
-  },
-  "4275": {
-    "idx": 4275,
-    "filename": "Tr-no_1066.jpg",
-    "class": "No Tumor",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_1066.jpg",
-    "boxes": [
-      {
-        "x1": 77,
-        "y1": 57,
-        "x2": 154,
-        "y2": 136
-      }
-    ],
-    "labels": [
-      "No Tumor"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:08:36.715318"
-  },
-  "4276": {
-    "idx": 4276,
-    "filename": "Tr-no_1067.jpg",
-    "class": "No Tumor",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_1067.jpg",
-    "boxes": [
-      {
-        "x1": 35,
-        "y1": 17,
-        "x2": 216,
-        "y2": 143
-      }
-    ],
-    "labels": [
-      "No Tumor"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:08:40.459982"
-  },
-  "4277": {
-    "idx": 4277,
-    "filename": "Tr-no_1068.jpg",
-    "class": "No Tumor",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\notumor\\Tr-no_1068.jpg",
-    "boxes": [],
-    "labels": [],
-    "box_types": [
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 17:08:43.305102"
-  },
-  "16": {
-    "idx": 16,
-    "filename": "Tr-gl_1012.jpg",
-    "class": "Glioma",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\glioma\\Tr-gl_1012.jpg",
-    "boxes": [
-      {
-        "x1": 191,
-        "y1": 300,
-        "x2": 483,
-        "y2": 369
-      }
-    ],
-    "labels": [
-      "Glioma"
-    ],
-    "box_types": [
-      "rectangle"
-    ],
-    "segmentations": [],
-    "timestamp": "2026-05-17 18:12:56.357952"
-  },
-  "34": {
-    "idx": 34,
-    "filename": "Tr-gl_1029.jpg",
-    "class": "Glioma",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\glioma\\Tr-gl_1029.jpg",
-    "boxes": [
-      {
-        "x1": 116,
-        "y1": 129,
-        "x2": 391,
-        "y2": 348
-      },
-      {
-        "x1": 54,
-        "y1": 133,
-        "x2": 315,
-        "y2": 240
-      }
-    ],
-    "labels": [
-      "Glioma",
-      "No Tumor"
-    ],
-    "box_types": [
-      "polygon",
       "rectangle"
     ],
     "segmentations": [
       {
-        "points": [
-          [
-            116,
-            129
-          ],
-          [
-            391,
-            281
-          ],
-          [
-            261,
-            209
-          ],
-          [
-            175,
-            348
-          ]
-        ]
-      },
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:02:17.944910"
+  },
+  "161": {
+    "idx": 161,
+    "filename": "image_1686.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1686.jpg",
+    "boxes": [
+      {
+        "x1": 481,
+        "y1": 769,
+        "x2": 1622,
+        "y2": 1315
+      }
+    ],
+    "labels": [
+      "Uveal Melanoma (UM)"
+    ],
+    "box_types": [
+      "rectangle"
+    ],
+    "segmentations": [
       {
         "points": []
       }
     ],
-    "timestamp": "2026-05-17 20:48:44.481526"
+    "timestamp": "2026-05-21 16:02:45.620409"
   },
-  "13": {
-    "idx": 13,
-    "filename": "Tr-gl_101.jpg",
-    "class": "Glioma",
+  "162": {
+    "idx": 162,
+    "filename": "image_1687.jpg",
+    "class": "No Tumor",
     "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\glioma\\Tr-gl_101.jpg",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1687.jpg",
+    "boxes": [
+      {
+        "x1": 1677,
+        "y1": 1049,
+        "x2": 2701,
+        "y2": 1784
+      }
+    ],
+    "labels": [
+      "Uveal Melanoma (UM)"
+    ],
+    "box_types": [
+      "rectangle"
+    ],
+    "segmentations": [
+      {
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:02:49.794445"
+  },
+  "163": {
+    "idx": 163,
+    "filename": "image_1688.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1688.jpg",
+    "boxes": [
+      {
+        "x1": 1226,
+        "y1": 728,
+        "x2": 2764,
+        "y2": 1810
+      }
+    ],
+    "labels": [
+      "Uveal Melanoma (UM)"
+    ],
+    "box_types": [
+      "rectangle"
+    ],
+    "segmentations": [
+      {
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:02:52.983700"
+  },
+  "164": {
+    "idx": 164,
+    "filename": "image_1689.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1689.jpg",
+    "boxes": [
+      {
+        "x1": 1320,
+        "y1": 891,
+        "x2": 2139,
+        "y2": 1784
+      }
+    ],
+    "labels": [
+      "Uveal Melanoma (UM)"
+    ],
+    "box_types": [
+      "rectangle"
+    ],
+    "segmentations": [
+      {
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:02:55.120836"
+  },
+  "165": {
+    "idx": 165,
+    "filename": "image_1610.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1610.jpg",
+    "boxes": [
+      {
+        "x1": 1441,
+        "y1": 1338,
+        "x2": 2228,
+        "y2": 1983
+      }
+    ],
+    "labels": [
+      "Uveal Melanoma (UM)"
+    ],
+    "box_types": [
+      "rectangle"
+    ],
+    "segmentations": [
+      {
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:02:58.075834"
+  },
+  "167": {
+    "idx": 167,
+    "filename": "image_1612.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1612.jpg",
+    "boxes": [
+      {
+        "x1": 1152,
+        "y1": 1112,
+        "x2": 2596,
+        "y2": 2151
+      }
+    ],
+    "labels": [
+      "Uveal Melanoma (UM)"
+    ],
+    "box_types": [
+      "rectangle"
+    ],
+    "segmentations": [
+      {
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:03:04.514289"
+  },
+  "168": {
+    "idx": 168,
+    "filename": "image_1613.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1613.jpg",
+    "boxes": [
+      {
+        "x1": 2097,
+        "y1": 928,
+        "x2": 2790,
+        "y2": 1842
+      }
+    ],
+    "labels": [
+      "Retinal Capillary Hemangioma (RCH)"
+    ],
+    "box_types": [
+      "rectangle"
+    ],
+    "segmentations": [
+      {
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:03:08.384866"
+  },
+  "170": {
+    "idx": 170,
+    "filename": "image_1615.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1615.jpg",
+    "boxes": [
+      {
+        "x1": 2123,
+        "y1": 1432,
+        "x2": 2664,
+        "y2": 1821
+      }
+    ],
+    "labels": [
+      "Retinal Capillary Hemangioma (RCH)"
+    ],
+    "box_types": [
+      "rectangle"
+    ],
+    "segmentations": [
+      {
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:03:29.002002"
+  },
+  "178": {
+    "idx": 178,
+    "filename": "image_1623.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1623.jpg",
+    "boxes": [
+      {
+        "x1": 1504,
+        "y1": 1322,
+        "x2": 2065,
+        "y2": 1836
+      }
+    ],
+    "labels": [
+      "Choroidal Hemangioma (CH)"
+    ],
+    "box_types": [
+      "rectangle"
+    ],
+    "segmentations": [
+      {
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:03:34.542197"
+  },
+  "187": {
+    "idx": 187,
+    "filename": "image_1632.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1632.jpg",
+    "boxes": [
+      {
+        "x1": 1925,
+        "y1": 1167,
+        "x2": 2369,
+        "y2": 2391
+      }
+    ],
+    "labels": [
+      "Choroidal Osteoma (CO)"
+    ],
+    "box_types": [
+      "rectangle"
+    ],
+    "segmentations": [
+      {
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:03:38.285944"
+  },
+  "188": {
+    "idx": 188,
+    "filename": "image_1633.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1633.jpg",
     "boxes": [],
     "labels": [],
     "box_types": [],
     "segmentations": [],
-    "timestamp": "2026-05-18 11:41:16.701730"
+    "timestamp": "2026-05-21 16:03:38.877404"
   },
-  "14": {
-    "idx": 14,
-    "filename": "Tr-gl_1010.jpg",
-    "class": "Glioma",
+  "189": {
+    "idx": 189,
+    "filename": "image_1634.jpg",
+    "class": "No Tumor",
     "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\glioma\\Tr-gl_1010.jpg",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1634.jpg",
+    "boxes": [
+      {
+        "x1": 1938,
+        "y1": 1598,
+        "x2": 2950,
+        "y2": 2261
+      }
+    ],
+    "labels": [
+      "Choroidal Osteoma (CO)"
+    ],
+    "box_types": [
+      "rectangle"
+    ],
+    "segmentations": [
+      {
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:03:43.787159"
+  },
+  "191": {
+    "idx": 191,
+    "filename": "image_1636.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1636.jpg",
     "boxes": [],
     "labels": [],
     "box_types": [],
     "segmentations": [],
-    "timestamp": "2026-05-18 11:41:20.231467"
+    "timestamp": "2026-05-21 16:03:44.226323"
   },
-  "64": {
-    "idx": 64,
-    "filename": "Tr-gl_1056.jpg",
-    "class": "Glioma",
+  "192": {
+    "idx": 192,
+    "filename": "image_1637.jpg",
+    "class": "No Tumor",
     "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\glioma\\Tr-gl_1056.jpg",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1637.jpg",
     "boxes": [
       {
-        "x1": 191,
-        "y1": 138,
-        "x2": 368,
-        "y2": 429
-      },
-      {
-        "x1": 169,
-        "y1": 88,
-        "x2": 383,
-        "y2": 353
+        "x1": 1733,
+        "y1": 1420,
+        "x2": 2485,
+        "y2": 2179
       }
     ],
     "labels": [
-      "Meningioma",
-      "Meningioma"
-    ],
-    "box_types": [
-      "rectangle",
-      "rectangle"
-    ],
-    "segmentations": [
-      {
-        "points": []
-      },
-      {
-        "points": []
-      }
-    ],
-    "timestamp": "2026-05-18 11:41:35.761245"
-  },
-  "96": {
-    "idx": 96,
-    "filename": "Tr-gl_1085.jpg",
-    "class": "Glioma",
-    "split": "Training",
-    "path": "D:\\6 Sem\\computer vision\\finals\\brain_tumor_mri\\Training\\glioma\\Tr-gl_1085.jpg",
-    "boxes": [
-      {
-        "x1": 146,
-        "y1": 178,
-        "x2": 261,
-        "y2": 317
-      }
-    ],
-    "labels": [
-      "Meningioma"
+      "Choroidal Osteoma (CO)"
     ],
     "box_types": [
       "rectangle"
@@ -983,6 +530,57 @@
         "points": []
       }
     ],
-    "timestamp": "2026-05-19 09:58:55.424942"
+    "timestamp": "2026-05-21 16:03:46.627887"
+  },
+  "193": {
+    "idx": 193,
+    "filename": "image_1638.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1638.jpg",
+    "boxes": [],
+    "labels": [],
+    "box_types": [],
+    "segmentations": [],
+    "timestamp": "2026-05-21 16:03:47.037441"
+  },
+  "194": {
+    "idx": 194,
+    "filename": "image_1639.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1639.jpg",
+    "boxes": [
+      {
+        "x1": 1699,
+        "y1": 1475,
+        "x2": 2711,
+        "y2": 2070
+      }
+    ],
+    "labels": [
+      "Choroidal Osteoma (CO)"
+    ],
+    "box_types": [
+      "rectangle"
+    ],
+    "segmentations": [
+      {
+        "points": []
+      }
+    ],
+    "timestamp": "2026-05-21 16:03:52.347064"
+  },
+  "196": {
+    "idx": 196,
+    "filename": "image_1641.jpg",
+    "class": "No Tumor",
+    "split": "Training",
+    "path": "D:\\6 Sem\\computer vision\\fundus_tumor\\flask_annotator\\uploaded_images\\image_1641.jpg",
+    "boxes": [],
+    "labels": [],
+    "box_types": [],
+    "segmentations": [],
+    "timestamp": "2026-05-21 16:03:52.811161"
   }
 }
