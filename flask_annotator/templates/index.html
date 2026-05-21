@@ -1,0 +1,1396 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroMark - Brain MRI Annotation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#00d4ff;
+  --primary-dark:#00a8cc;
+  --primary-glow:rgba(0,212,255,.18);
+  --accent:#7c3aed;
+  --bg:#0a0e1a;
+  --bg2:#0f1525;
+  --surface:#131929;
+  --surface2:#1a2236;
+  --surface3:#212d42;
+  --text:#e2e8f0;
+  --text2:#94a3b8;
+  --text3:#64748b;
+  --border:#1e2d45;
+  --border2:#263548;
+  --success:#00e5a0;
+  --warning:#fbbf24;
+  --danger:#f43f5e;
+  --shadow:0 2px 8px rgba(0,0,0,.4);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.6);
+  --radius:10px;
+  --radius-sm:6px;
+  --transition:.18s cubic-bezier(.4,0,.2,1);
+  --font:'Inter',system-ui,sans-serif;
+  --left-panel-width:252px;
+  --right-panel-width:300px;
+}
+html{font-size:13px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--surface3)}
+
+.header{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  padding:0 18px;height:52px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;box-shadow:0 1px 0 var(--border),var(--shadow);
+}
+.header-left{display:flex;align-items:center;gap:10px}
+.header-logo{
+  width:32px;height:32px;border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;color:#fff;letter-spacing:-1px;
+  box-shadow:0 0 12px var(--primary-glow);
+}
+.header h1{font-size:15px;font-weight:700;color:var(--text);letter-spacing:-.3px}
+.header-badge{
+  background:var(--primary-glow);color:var(--primary);
+  border:1px solid rgba(0,212,255,.25);
+  padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:.04em
+}
+.header-center{display:flex;align-items:center;gap:14px}
+.progress-wrap{display:flex;align-items:center;gap:8px}
+.progress-bar{width:130px;height:4px;background:var(--border2);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--success));border-radius:2px;transition:width var(--transition)}
+.progress-text{font-size:11px;font-weight:600;color:var(--text2);white-space:nowrap}
+.header-right{display:flex;align-items:center;gap:4px}
+
+.btn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 12px;border-radius:var(--radius-sm);
+  font-size:11px;font-weight:600;font-family:var(--font);
+  border:1px solid var(--border2);background:var(--surface2);
+  color:var(--text);cursor:pointer;transition:all var(--transition);
+  text-decoration:none;white-space:nowrap;
+}
+.btn:hover{background:var(--surface3);border-color:var(--border2);transform:translateY(-1px);box-shadow:var(--shadow)}
+.btn:active{transform:translateY(0)}
+.btn-primary{background:var(--primary);color:#0a0e1a;border-color:var(--primary);font-weight:700}
+.btn-primary:hover{background:var(--primary-dark);border-color:var(--primary-dark)}
+.btn-success{background:var(--success);color:#0a0e1a;border-color:var(--success);font-weight:700}
+.btn-success:hover{background:#00c48a;border-color:#00c48a}
+.btn-danger{background:var(--danger);color:#fff;border-color:var(--danger)}
+.btn-danger:hover{background:#e11d48;border-color:#e11d48}
+.btn-ghost{background:transparent;border-color:transparent;color:var(--text2)}
+.btn-ghost:hover{background:var(--surface2);color:var(--text)}
+.btn-sm{padding:4px 9px;font-size:10px}
+.btn-icon{padding:5px;width:30px;height:30px;justify-content:center;font-size:13px}
+
+.app-container{display:flex;height:calc(100vh - 52px)}
+
+.left-panel{
+  width:var(--left-panel-width);background:var(--surface);
+  border-right:1px solid var(--border);display:flex;flex-direction:column;
+  overflow-y:auto;flex-shrink:0;
+}
+.left-header{
+  padding:14px 14px 12px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+  background:linear-gradient(180deg,var(--surface2),var(--surface));
+}
+.left-header .logo{
+  width:32px;height:32px;border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;color:#fff;
+  box-shadow:0 0 10px var(--primary-glow);
+}
+.left-header .app-name{font-size:13px;font-weight:700;color:var(--text);line-height:1.2}
+.left-header .app-version{font-size:10px;color:var(--text3);margin-top:1px}
+.lpanel-section{padding:11px 14px;border-bottom:1px solid var(--border)}
+.lpanel-section:last-child{border-bottom:none}
+.lpanel-label{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--text3);letter-spacing:.1em;margin-bottom:7px}
+.tool-group{display:flex;gap:4px}
+.tool-btn{
+  flex:1;padding:6px 7px;border-radius:var(--radius-sm);
+  border:1px solid var(--border2);background:var(--surface2);
+  cursor:pointer;font-size:10px;font-weight:600;font-family:var(--font);
+  transition:all var(--transition);text-align:center;color:var(--text2);
+  display:flex;align-items:center;justify-content:center;gap:4px;
+}
+.tool-btn:hover{background:var(--surface3);border-color:var(--primary);color:var(--primary)}
+.tool-btn.active{background:var(--primary);color:#0a0e1a;border-color:var(--primary);font-weight:700;box-shadow:0 0 8px var(--primary-glow)}
+.tool-row{display:flex;gap:4px;align-items:center}
+.tool-row .tool-btn{flex:0 0 auto;padding:4px 9px}
+.zoom-value{font-size:11px;font-weight:700;min-width:40px;text-align:center;color:var(--primary);font-variant-numeric:tabular-nums}
+.view-toggle{display:flex;align-items:center;gap:7px;padding:3px 0;cursor:pointer;font-size:11px;font-weight:500;user-select:none;color:var(--text2)}
+.view-toggle:hover{color:var(--text)}
+.view-toggle input[type="checkbox"]{width:14px;height:14px;accent-color:var(--primary);cursor:pointer}
+.lpanel-info{font-size:10px;color:var(--text3);line-height:1.5}
+.lpanel-info strong{color:var(--text2)}
+
+.main-area{flex:1;display:flex;flex-direction:column;padding:14px;overflow:hidden;min-width:0}
+.image-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-shrink:0}
+.image-info{display:flex;align-items:center;gap:8px}
+.image-info h2{font-size:13px;font-weight:600;color:var(--text)}
+.tool-indicator{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;
+  background:var(--primary-glow);color:var(--primary);border:1px solid rgba(0,212,255,.2);
+}
+.class-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600}
+.class-tag-dot{width:7px;height:7px;border-radius:50%}
+.split-tag{background:var(--surface2);border:1px solid var(--border2);padding:2px 8px;border-radius:20px;font-size:9px;font-weight:600;color:var(--text3)}
+
+.canvas-container{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  background:var(--bg);border-radius:var(--radius);overflow:hidden;
+  position:relative;min-height:400px;
+  background-image:radial-gradient(circle,var(--border) 1px,transparent 1px);
+  background-size:22px 22px;border:1px solid var(--border);
+}
+.canvas-wrapper{position:relative;display:inline-block;transition:transform .15s ease}
+.canvas-wrapper img{display:block;image-rendering:auto}
+.canvas-overlay{position:absolute;top:0;left:0;width:100%;height:100%;cursor:crosshair}
+.status-empty{
+  color:var(--text3);text-align:center;font-size:13px;font-weight:500;
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;
+}
+
+.side-panel{
+  width:var(--right-panel-width);background:var(--surface);
+  border-left:1px solid var(--border);display:flex;flex-direction:column;
+  overflow-y:auto;flex-shrink:0;
+}
+.panel-section{padding:12px 14px;border-bottom:1px solid var(--border)}
+.panel-section:last-child{border-bottom:none}
+.panel-label{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--text3);letter-spacing:.1em;margin-bottom:7px}
+.class-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.class-btn{
+  padding:7px 7px;border-radius:var(--radius-sm);border:1.5px solid var(--border2);
+  background:var(--surface2);cursor:pointer;font-size:10px;font-weight:600;
+  font-family:var(--font);transition:all var(--transition);text-align:center;color:var(--text2);
+}
+.class-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow);color:var(--text)}
+.class-btn.active{border-width:1.5px;background:var(--surface3);color:var(--text)}
+.class-btn .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px}
+.box-list{display:flex;flex-direction:column;gap:4px}
+.box-item{
+  display:flex;align-items:center;gap:7px;padding:6px 9px;border-radius:var(--radius-sm);
+  background:var(--surface2);border:1px solid var(--border);transition:all var(--transition);cursor:pointer;
+}
+.box-item:hover{border-color:var(--border2);background:var(--surface3)}
+.box-item .color-bar{width:3px;height:28px;border-radius:2px;flex-shrink:0}
+.box-item .box-label{font-size:11px;font-weight:600;flex:1;color:var(--text)}
+.box-item .box-coords{font-size:9px;color:var(--text3)}
+.box-item .box-type-icon{font-size:9px;margin-right:2px}
+.box-item .box-del{
+  width:20px;height:20px;border-radius:4px;border:none;
+  background:transparent;cursor:pointer;font-size:12px;color:var(--text3);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:all var(--transition);
+}
+.box-item .box-del:hover{background:rgba(244,63,94,.15);color:var(--danger)}
+.empty-boxes{color:var(--text3);font-size:11px;font-style:italic;text-align:center;padding:10px}
+.nav-row{display:flex;align-items:center;gap:5px}
+.nav-row .btn{flex:1}
+.jump-input{
+  flex:1;padding:6px;border:1px solid var(--border2);border-radius:var(--radius-sm);
+  font-size:11px;font-family:var(--font);outline:none;text-align:center;
+  background:var(--surface2);color:var(--text);transition:border-color var(--transition);
+}
+.jump-input:focus{border-color:var(--primary);box-shadow:0 0 0 2px var(--primary-glow)}
+.jump-row{display:flex;gap:5px}
+.kbd-hints{display:flex;flex-wrap:wrap;gap:3px 8px}
+.kbd-hint{font-size:9px;color:var(--text3)}
+kbd{
+  display:inline-block;padding:1px 4px;font-size:9px;font-family:var(--font);
+  background:var(--surface3);border:1px solid var(--border2);border-radius:3px;
+  box-shadow:0 1px 0 var(--border);line-height:1.4;color:var(--text2);
+}
+
+.toast-container{position:fixed;bottom:20px;right:20px;z-index:1000;display:flex;flex-direction:column;gap:7px}
+.toast{
+  padding:9px 16px;border-radius:var(--radius-sm);font-size:11px;font-weight:500;
+  color:#fff;box-shadow:var(--shadow-lg);animation:toastIn .25s ease-out;
+  display:flex;align-items:center;gap:7px;max-width:300px;
+  border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px);
+}
+.toast-success{background:rgba(0,229,160,.9);color:#0a0e1a}
+.toast-error{background:rgba(244,63,94,.9)}
+.toast-info{background:rgba(0,212,255,.9);color:#0a0e1a}
+@keyframes toastIn{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes toastOut{from{opacity:1}to{opacity:0;transform:translateY(12px)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;
+  display:flex;align-items:center;justify-content:center;
+  animation:fadeIn .2s ease-out;backdrop-filter:blur(4px);
+}
+.modal{
+  background:var(--surface);border-radius:var(--radius);padding:22px;
+  min-width:380px;max-width:580px;max-height:80vh;overflow-y:auto;
+  box-shadow:var(--shadow-lg);border:1px solid var(--border2);
+}
+.modal h3{font-size:14px;font-weight:700;margin-bottom:12px;color:var(--text)}
+.modal-actions{display:flex;gap:7px;justify-content:flex-end;margin-top:14px}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.spinner{display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,.2);border-top-color:currentColor;border-radius:50%;animation:spin .6s linear infinite}
+.ann-viewer{max-height:400px;overflow-y:auto}
+.ann-viewer pre{
+  font-size:10px;line-height:1.5;white-space:pre-wrap;word-break:break-all;
+  background:var(--bg);color:var(--text2);padding:12px;border-radius:var(--radius-sm);
+  max-height:280px;overflow-y:auto;border:1px solid var(--border);
+}
+.text-secondary{color:var(--text2)}
+.mt-2{margin-top:7px}
+.mb-2{margin-bottom:7px}
+.flex{display:flex}
+.gap-2{gap:7px}
+.items-center{align-items:center}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header">
+  <div class="header-left">
+    <div class="header-logo">🧠</div>
+    <h1>TumorTracer</h1>
+    <span class="header-badge">v2.0</span>
+  </div>
+  <div class="header-center" id="headerCenter">
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+      <span class="progress-text" id="progressText">0 / 0</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="btn btn-ghost btn-icon" onclick="showUploadModal()" title="Upload Images">⬆️</button>
+    <button class="btn btn-ghost btn-icon" onclick="showAnnotations()" title="View Saved Annotations">📋</button>
+    <button class="btn btn-ghost btn-icon" onclick="exportAnnotations()" title="Export Annotations JSON">📥</button>
+    <button class="btn btn-ghost btn-icon" onclick="exportYolo()" title="Export YOLO Format" style="font-size:14px">🎯</button>
+  </div>
+</header>
+
+<!-- ═══ MAIN LAYOUT ═══ -->
+<div class="app-container">
+
+  <!-- ─── LEFT PANEL (Tools) ─── -->
+  <div class="left-panel" id="leftPanel">
+
+    <div class="left-header">
+      <div class="logo">🧠</div>
+      <div>
+        <div class="app-name">TumorTracer</div>
+        <div class="app-version">Brain MRI Annotation Tool</div>
+      </div>
+    </div>
+
+    <!-- Tool Mode -->
+    <div class="lpanel-section">
+      <div class="lpanel-label">Annotation Tool</div>
+      <div class="tool-group">
+        <button class="tool-btn active" data-tool="rectangle" onclick="setTool('rectangle')">
+          &#9634; Rectangle
+        </button>
+        <button class="tool-btn" data-tool="polygon" onclick="setTool('polygon')">
+          &#11041; Polygon
+        </button>
+      </div>
+      <div id="polygonHint" style="display:none; margin-top:6px; font-size:10px; color:var(--text-secondary); line-height:1.4;">
+        Click to add vertices &middot; Click first vertex to close &middot; <kbd style="font-size:9px">Esc</kbd> cancel
+      </div>
+    </div>
+
+    <!-- Zoom -->
+    <div class="lpanel-section">
+      <div class="lpanel-label">Zoom</div>
+      <div class="tool-row">
+        <button class="tool-btn" onclick="zoomIn()" title="Zoom In">+</button>
+        <span class="zoom-value" id="zoomDisplay">100%</span>
+        <button class="tool-btn" onclick="zoomOut()" title="Zoom Out">&minus;</button>
+        <button class="tool-btn" onclick="zoomFit()" title="Fit to Screen">&#8865; Fit</button>
+      </div>
+    </div>
+
+    <!-- View -->
+    <div class="lpanel-section">
+      <div class="lpanel-label">View</div>
+      <label class="view-toggle">
+        <input type="checkbox" id="showLabels" checked onchange="redraw()">
+        Show Labels
+      </label>
+      <label class="view-toggle">
+        <input type="checkbox" id="showAnnotationsChk" checked onchange="redraw()">
+        Show Annotations
+      </label>
+    </div>
+
+    <!-- Edit -->
+    <div class="lpanel-section">
+      <div class="lpanel-label">Edit</div>
+      <div class="tool-group">
+        <button class="tool-btn" onclick="undoLast()" title="Undo Last Annotation">&#8617; Undo</button>
+        <button class="tool-btn" onclick="clearCurrentBoxes()" title="Clear All">🗑 Clear</button>
+      </div>
+    </div>
+
+    <!-- Export -->
+    <div class="lpanel-section">
+      <div class="lpanel-label">Export</div>
+      <div class="tool-group">
+        <button class="tool-btn btn-success" onclick="exportYolo()" style="flex:1; border-color:var(--success);">🎯 YOLO Format</button>
+      </div>
+      <div class="lpanel-info mt-2">
+        Exports both bounding boxes and polygons as normalized YOLO .txt files
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── Canvas Area ─── -->
+  <div class="main-area">
+    <div class="image-header">
+      <div class="image-info">
+        <h2 id="imageTitle">Image 1 / <span id="totalDisplay">0</span></h2>
+        <span id="toolIndicator" class="tool-indicator">&#9634; Rectangle</span>
+        <span class="class-tag" id="classTag"><span class="class-tag-dot"></span> <span id="className">-</span></span>
+        <span class="split-tag" id="splitTag">-</span>
+      </div>
+      <span class="text-secondary" id="fileLabel">-</span>
+    </div>
+    <div class="canvas-container" id="canvasContainer">
+      <div class="canvas-wrapper" id="canvasWrapper">
+        <img id="mainImage" src="" alt="MRI Scan" style="display:none">
+        <canvas id="overlayCanvas" class="canvas-overlay"></canvas>
+      </div>
+      <div class="status-empty" id="emptyState">Loading images...</div>
+    </div>
+  </div>
+
+  <!-- ─── Right Panel ─── -->
+  <div class="side-panel" id="sidePanel">
+
+    <!-- Class Selection -->
+    <div class="panel-section">
+      <div class="panel-label">Classification Label</div>
+      <div class="class-grid" id="classGrid"></div>
+    </div>
+
+    <!-- Box List -->
+    <div class="panel-section" style="flex:1; overflow-y:auto;">
+      <div class="panel-label">Annotations <span id="boxCount" class="text-secondary">(0)</span></div>
+      <div class="box-list" id="boxList">
+        <div class="empty-boxes">Draw on the image to add annotations</div>
+      </div>
+    </div>
+
+    <!-- Save Actions -->
+    <div class="panel-section">
+      <div class="panel-label">Actions</div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <button class="btn btn-success" id="saveBtn" onclick="saveAnnotation()" style="flex:1">💾 Save</button>
+        <button class="btn btn-ghost btn-sm" onclick="clearCurrentBoxes()">🗑 Clear</button>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="panel-section">
+      <div class="panel-label">Navigation</div>
+      <div class="nav-row mb-2">
+        <button class="btn btn-sm" onclick="goImage(0)" title="First">&#9198;</button>
+        <button class="btn btn-sm" onclick="goImage(currentIdx - 1)" title="Previous">&#9664;</button>
+        <span style="font-size:12px; font-weight:600;" id="navIdx">1 / 1</span>
+        <button class="btn btn-sm" onclick="goImage(currentIdx + 1)" title="Next">&#9654;</button>
+        <button class="btn btn-sm" onclick="goImage(totalImages - 1)" title="Last">&#9197;</button>
+      </div>
+      <div class="jump-row">
+        <input type="number" class="jump-input" id="jumpInput" min="1" placeholder="Go to #"
+               onkeydown="if(event.key==='Enter')goImage(parseInt(this.value)-1)">
+        <button class="btn btn-sm" onclick="goImage(parseInt($id('jumpInput').value)-1)">Go</button>
+      </div>
+    </div>
+
+    <!-- Shortcuts -->
+    <div class="panel-section">
+      <div class="panel-label">Shortcuts</div>
+      <div class="kbd-hints">
+        <span class="kbd-hint"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> Navigate</span>
+        <span class="kbd-hint"><kbd>S</kbd> Save</span>
+        <span class="kbd-hint"><kbd>R</kbd> Rectangle</span>
+        <span class="kbd-hint"><kbd>P</kbd> Polygon</span>
+        <span class="kbd-hint"><kbd>Del</kbd> Delete</span>
+        <span class="kbd-hint"><kbd>Esc</kbd> Cancel/Deselect</span>
+        <span class="kbd-hint"><kbd>+</kbd> <kbd>-</kbd> Zoom</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ═══ MODAL ═══ -->
+<div id="modalContainer"></div>
+
+<script>
+// ── STATE ─────────────────────────────────────────
+let currentIdx = 0;
+let totalImages = {{ total }};
+let images = [];
+let boxes = [];
+let labels = [];
+let boxTypes = [];
+let segmentations = [];
+let selectedBox = -1;
+let isDrawing = false;
+let drawStart = null;
+
+// New state
+let currentTool = 'rectangle';
+let polygonPoints = [];
+let isDrawingPolygon = false;
+let zoomLevel = 1;
+let baseScale = 1;
+let showLabelsState = true;
+let showAnnotationsState = true;
+
+const CLASSES = {{ classes | tojson }};
+const CLASS_COLORS = {{ class_colors | tojson }};
+let canvasEl, ctx, mainImg, canvasWrapper;
+
+function $id(id) { return document.getElementById(id); }
+
+// ── INIT ──────────────────────────────────────────
+async function init() {
+  canvasEl = $id('overlayCanvas');
+  ctx = canvasEl.getContext('2d');
+  mainImg = $id('mainImage');
+  canvasWrapper = $id('canvasWrapper');
+  await loadImageList();
+  setupClassGrid();
+  setupCanvasEvents();
+  setupKeyboard();
+
+  if (totalImages > 0) {
+    await loadImage(0);
+  } else {
+    $id('emptyState').textContent = 'No images loaded. Click \u2B06\uFE0F to upload images.';
+    $id('emptyState').style.display = 'block';
+  }
+}
+
+async function loadImageList() {
+  const res = await fetch('/api/images');
+  images = await res.json();
+  totalImages = images.length;
+  updateProgress();
+}
+
+// ── IMAGE LOADING ─────────────────────────────────
+async function loadImage(idx) {
+  if (!mainImg) return;
+  if (idx < 0 || idx >= totalImages) return;
+  currentIdx = idx;
+  selectedBox = -1;
+  polygonPoints = [];
+  isDrawingPolygon = false;
+  zoomLevel = 1;
+
+  const emptyState = $id('emptyState');
+  if (emptyState) {
+    emptyState.textContent = 'Loading image...';
+    emptyState.style.display = 'block';
+  }
+  mainImg.style.display = 'none';
+
+  try {
+    const res = await fetch(`/api/image/${idx}`);
+    if (!res.ok) throw new Error(`API error: ${res.status}`);
+    const data = await res.json();
+
+    const updateElement = (id, value, property = 'textContent') => {
+      const el = $id(id);
+      if (el) { el[property] = value; }
+    };
+
+    const imageTitleEl = $id('imageTitle');
+    if (imageTitleEl) imageTitleEl.innerHTML = `Image ${idx + 1} / <span id="totalDisplay">${totalImages}</span>`;
+    updateElement('navIdx', `${idx + 1} / ${totalImages}`);
+    updateElement('jumpInput', idx + 1, 'value');
+    updateElement('fileLabel', data.filename);
+
+    const cls = data.class;
+    const color = CLASS_COLORS[cls] || '#888';
+    const classTag = $id('classTag');
+    if (classTag) {
+      const classTagDot = classTag.querySelector('.class-tag-dot');
+      if (classTagDot) classTagDot.style.background = color;
+      classTag.style.background = color + '20';
+      classTag.style.color = color;
+    }
+    updateElement('className', cls);
+    updateElement('splitTag', data.split);
+
+    boxes = (data.boxes || []).map(b => ({...b}));
+    labels = [...(data.labels || [])];
+    boxTypes = [...(data.box_types || [])];
+    if (boxTypes.length < boxes.length) {
+      boxTypes = boxes.map(() => 'rectangle');
+    }
+    segmentations = (data.segmentations || []).map(s => JSON.parse(JSON.stringify(s)));
+    selectedBox = -1;
+
+    const handleImageLoad = function() {
+      mainImg.style.display = 'block';
+      if (emptyState) emptyState.style.display = 'none';
+      fitCanvasToImage(mainImg);
+      redraw();
+      updateBoxList();
+    };
+
+    mainImg.onload = handleImageLoad;
+    mainImg.onerror = function() {
+      if (emptyState) {
+        emptyState.textContent = 'Failed to load image!';
+        emptyState.style.display = 'block';
+      }
+    };
+
+    const imageSrc = `/api/image_file/${idx}?_t=${Date.now()}`;
+    mainImg.src = imageSrc;
+
+    updateNav();
+    updateProgress();
+  } catch (error) {
+    console.error('Error loading image:', error);
+    if (emptyState) {
+      emptyState.textContent = 'Error loading image: ' + error.message;
+      emptyState.style.display = 'block';
+    }
+  }
+}
+
+function fitCanvasToImage(imgEl) {
+  const container = $id('canvasContainer');
+  if (!container) return;
+  const containerW = container.clientWidth - 8;
+  const containerH = container.clientHeight - 8;
+  const natW = imgEl.naturalWidth;
+  const natH = imgEl.naturalHeight;
+  if (!natW || !natH) { setTimeout(() => fitCanvasToImage(imgEl), 100); return; }
+  baseScale = Math.min(1, containerW / natW, containerH / natH);
+  applyZoom();
+}
+
+function applyZoom() {
+  const natW = mainImg.naturalWidth;
+  const natH = mainImg.naturalHeight;
+  if (!natW || !natH) return;
+  const scale = baseScale * zoomLevel;
+  const dispW = Math.round(natW * scale);
+  const dispH = Math.round(natH * scale);
+  if (canvasEl) {
+    canvasEl.width = dispW;
+    canvasEl.height = dispH;
+    canvasEl.style.width = dispW + 'px';
+    canvasEl.style.height = dispH + 'px';
+  }
+  mainImg.style.width = dispW + 'px';
+  mainImg.style.height = dispH + 'px';
+  if (canvasWrapper) {
+    canvasWrapper.style.width = dispW + 'px';
+  }
+  $id('zoomDisplay').textContent = Math.round(zoomLevel * 100) + '%';
+  redraw();
+}
+
+// ── ZOOM ──────────────────────────────────────────
+function zoomIn() {
+  zoomLevel = Math.min(zoomLevel * 1.3, 5);
+  applyZoom();
+}
+
+function zoomOut() {
+  zoomLevel = Math.max(zoomLevel / 1.3, 0.1);
+  applyZoom();
+}
+
+function zoomFit() {
+  zoomLevel = 1;
+  if (mainImg && mainImg.complete && mainImg.naturalWidth) {
+    fitCanvasToImage(mainImg);
+  }
+}
+
+// ── TOOL MODE ─────────────────────────────────────
+function setTool(tool) {
+  if (isDrawingPolygon) { cancelPolygon(); }
+  currentTool = tool;
+  document.querySelectorAll('.tool-btn[data-tool]').forEach(el => {
+    el.classList.toggle('active', el.dataset.tool === tool);
+  });
+  $id('polygonHint').style.display = tool === 'polygon' ? 'block' : 'none';
+  const indicator = $id('toolIndicator');
+  indicator.innerHTML = tool === 'rectangle' ? '&#9634; Rectangle' : '&#11041; Polygon';
+  setCanvasCursor();
+}
+
+function setCanvasCursor() {
+  canvasEl.style.cursor = 'crosshair';
+}
+
+// ── POLYGON ───────────────────────────────────────
+function addPolygonVertex(displayX, displayY) {
+  polygonPoints.push({x: displayX, y: displayY});
+  isDrawingPolygon = true;
+  redraw();
+}
+
+function tryClosePolygon(displayX, displayY) {
+  if (polygonPoints.length < 3) return false;
+  const first = polygonPoints[0];
+  const dx = displayX - first.x;
+  const dy = displayY - first.y;
+  const dist = Math.sqrt(dx*dx + dy*dy);
+  return dist < 15;
+}
+
+function closePolygon() {
+  if (polygonPoints.length < 3) {
+    showToast('Polygon needs at least 3 points', 'error');
+    cancelPolygon();
+    return;
+  }
+
+  const scaleX = mainImg.naturalWidth / canvasEl.width;
+  const scaleY = mainImg.naturalHeight / canvasEl.height;
+
+  const natPoints = polygonPoints.map(p => [
+    Math.round(p.x * scaleX),
+    Math.round(p.y * scaleY)
+  ]);
+
+  const xs = natPoints.map(p => p[0]);
+  const ys = natPoints.map(p => p[1]);
+  const x1 = Math.min(...xs);
+  const y1 = Math.min(...ys);
+  const x2 = Math.max(...xs);
+  const y2 = Math.max(...ys);
+
+  if (x2 - x1 < 5 && y2 - y1 < 5) {
+    showToast('Polygon too small', 'error');
+    cancelPolygon();
+    return;
+  }
+
+  boxes.push({x1, y1, x2, y2});
+  labels.push(CLASSES[getActiveClassIdx()]);
+  boxTypes.push('polygon');
+  segmentations.push({points: natPoints});
+
+  selectedBox = boxes.length - 1;
+  polygonPoints = [];
+  isDrawingPolygon = false;
+  redraw();
+  updateBoxList();
+  autoSave();
+  showToast('Polygon added', 'success');
+}
+
+function cancelPolygon() {
+  polygonPoints = [];
+  isDrawingPolygon = false;
+  redraw();
+}
+
+// ── CANVAS EVENTS ─────────────────────────────────
+function setupCanvasEvents() {
+  let isDown = false;
+  let startX, startY;
+
+  canvasEl.addEventListener('mousedown', (e) => {
+    const rect = canvasEl.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+
+    if (e.button !== 0) return;
+
+    if (currentTool === 'polygon') {
+      if (isDrawingPolygon) {
+        if (tryClosePolygon(mx, my)) {
+          closePolygon();
+        } else {
+          addPolygonVertex(mx, my);
+        }
+      } else {
+        addPolygonVertex(mx, my);
+      }
+      return;
+    }
+
+    const boxIdx = hitTest(mx, my);
+    if (boxIdx >= 0) {
+      selectedBox = boxIdx;
+      redraw();
+      updateBoxList();
+      return;
+    }
+
+    selectedBox = -1;
+    isDown = true;
+    drawStart = {x: mx, y: my};
+    isDrawing = true;
+  });
+
+  canvasEl.addEventListener('mousemove', (e) => {
+    const rect = canvasEl.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+
+    if (currentTool === 'polygon') {
+      if (isDrawingPolygon) {
+        redraw();
+        drawPolygonPreview(mx, my);
+        if (tryClosePolygon(mx, my) && polygonPoints.length >= 3) {
+          canvasEl.style.cursor = 'pointer';
+        } else {
+          canvasEl.style.cursor = 'crosshair';
+        }
+      }
+      return;
+    }
+
+    if (isDown && isDrawing && drawStart) {
+      redraw();
+      ctx.save();
+      ctx.strokeStyle = getSelectedColor();
+      ctx.lineWidth = 2;
+      ctx.setLineDash([5, 5]);
+      ctx.strokeRect(drawStart.x, drawStart.y, mx - drawStart.x, my - drawStart.y);
+      ctx.restore();
+    } else {
+      canvasEl.style.cursor = hitTest(mx, my) >= 0 ? 'pointer' : 'crosshair';
+    }
+  });
+
+  canvasEl.addEventListener('mouseup', (e) => {
+    if (currentTool === 'polygon') return;
+    if (!isDown || !drawStart) { isDown = false; return; }
+    isDown = false;
+
+    const rect = canvasEl.getBoundingClientRect();
+    const endX = e.clientX - rect.left;
+    const endY = e.clientY - rect.top;
+
+    const scaleX = mainImg.naturalWidth / canvasEl.width;
+    const scaleY = mainImg.naturalHeight / canvasEl.height;
+
+    let x1 = Math.min(drawStart.x, endX);
+    let y1 = Math.min(drawStart.y, endY);
+    let x2 = Math.max(drawStart.x, endX);
+    let y2 = Math.max(drawStart.y, endY);
+
+    x1 = Math.round(x1 * scaleX);
+    y1 = Math.round(y1 * scaleY);
+    x2 = Math.round(x2 * scaleX);
+    y2 = Math.round(y2 * scaleY);
+
+    if (x2 - x1 >= 10 && y2 - y1 >= 10) {
+      boxes.push({x1, y1, x2, y2});
+      labels.push(CLASSES[getActiveClassIdx()]);
+      boxTypes.push('rectangle');
+      segmentations.push({points: []});
+      selectedBox = boxes.length - 1;
+      redraw();
+      updateBoxList();
+      autoSave();
+      showToast('Rectangle added', 'success');
+    }
+
+    drawStart = null;
+    isDrawing = false;
+  });
+
+  canvasEl.addEventListener('mouseleave', () => {
+    isDown = false;
+    drawStart = null;
+    if (!isDrawingPolygon) {
+      isDrawing = false;
+      redraw();
+    }
+  });
+
+  canvasEl.addEventListener('dblclick', (e) => {
+    if (currentTool === 'polygon' && isDrawingPolygon) {
+      e.preventDefault();
+      closePolygon();
+    }
+  });
+
+  canvasEl.addEventListener('contextmenu', (e) => {
+    if (currentTool === 'polygon' && isDrawingPolygon) {
+      e.preventDefault();
+      cancelPolygon();
+      showToast('Polygon cancelled', 'info');
+    }
+  });
+}
+
+function drawPolygonPreview(mx, my) {
+  if (!ctx || polygonPoints.length === 0) return;
+  ctx.save();
+
+  for (let i = 0; i < polygonPoints.length; i++) {
+    const p = polygonPoints[i];
+
+    if (i < polygonPoints.length - 1) {
+      const next = polygonPoints[i + 1];
+      ctx.strokeStyle = getSelectedColor();
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      ctx.lineTo(next.x, next.y);
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = '#fff';
+    ctx.strokeStyle = getSelectedColor();
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    if (i === 0) {
+      ctx.fillStyle = getSelectedColor();
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  if (polygonPoints.length > 0) {
+    const last = polygonPoints[polygonPoints.length - 1];
+    ctx.strokeStyle = getSelectedColor() + '88';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(last.x, last.y);
+    ctx.lineTo(mx, my);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    const isClose = tryClosePolygon(mx, my) && polygonPoints.length >= 3;
+    if (isClose) {
+      const first = polygonPoints[0];
+      ctx.strokeStyle = getSelectedColor();
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(mx, my);
+      ctx.lineTo(first.x, first.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = getSelectedColor() + '30';
+      ctx.beginPath();
+      ctx.arc(first.x, first.y, 10, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = getSelectedColor();
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(first.x, first.y, 10, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  }
+
+  ctx.restore();
+}
+
+function hitTest(mx, my) {
+  const scaleX = mainImg.naturalWidth / canvasEl.width;
+  const scaleY = mainImg.naturalHeight / canvasEl.height;
+  const ix = mx * scaleX;
+  const iy = my * scaleY;
+
+  for (let i = boxes.length - 1; i >= 0; i--) {
+    const b = boxes[i];
+    const pad = 5;
+    if (ix >= b.x1 - pad && ix <= b.x2 + pad && iy >= b.y1 - pad && iy <= b.y2 + pad) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+// ── REDRAW ────────────────────────────────────────
+function redraw() {
+  if (!ctx || !canvasEl || !mainImg) return;
+  ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
+  const scaleX = canvasEl.width / mainImg.naturalWidth;
+  const scaleY = canvasEl.height / mainImg.naturalHeight;
+
+  showLabelsState = $id('showLabels').checked;
+  showAnnotationsState = $id('showAnnotationsChk').checked;
+
+  if (!showAnnotationsState && !isDrawingPolygon && !drawStart) return;
+
+  for (let i = 0; i < boxes.length; i++) {
+    if (!showAnnotationsState) break;
+    const b = boxes[i];
+    const label = labels[i] || 'Unknown';
+    const color = CLASS_COLORS[label] || '#FF0000';
+    const boxType = boxTypes[i] || 'rectangle';
+    const x1 = b.x1 * scaleX;
+    const y1 = b.y1 * scaleY;
+    const x2 = b.x2 * scaleX;
+    const y2 = b.y2 * scaleY;
+    const w = x2 - x1;
+    const h = y2 - y1;
+
+    const isSel = i === selectedBox;
+
+    ctx.save();
+
+    if (boxType === 'polygon') {
+      const seg = segmentations[i];
+      if (seg && seg.points && seg.points.length > 2) {
+        const pts = seg.points.map(p => [p[0] * scaleX, p[1] * scaleY]);
+        ctx.fillStyle = color + '18';
+        ctx.beginPath();
+        ctx.moveTo(pts[0][0], pts[0][1]);
+        for (let k = 1; k < pts.length; k++) { ctx.lineTo(pts[k][0], pts[k][1]); }
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = isSel ? 3 : 2;
+        ctx.stroke();
+
+        for (const [px, py] of pts) {
+          ctx.fillStyle = '#fff';
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.arc(px, py, isSel ? 4 : 3, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+        }
+      } else {
+        ctx.fillStyle = color + '20';
+        ctx.fillRect(x1, y1, w, h);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = isSel ? 3 : 2;
+        ctx.strokeRect(x1, y1, w, h);
+      }
+    } else {
+      ctx.fillStyle = color + '20';
+      ctx.fillRect(x1, y1, w, h);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = isSel ? 3 : 2;
+      ctx.strokeRect(x1, y1, w, h);
+    }
+
+    if (isSel) {
+      const hs = 5;
+      ctx.fillStyle = '#fff';
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      const handles = [[x1,y1],[x2,y1],[x1,y2],[x2,y2],[(x1+x2)/2,y1],[x1,(y1+y2)/2],[x2,(y1+y2)/2],[(x1+x2)/2,y2]];
+      for (const [hx, hy] of handles) {
+        ctx.fillRect(hx - hs/2, hy - hs/2, hs, hs);
+        ctx.strokeRect(hx - hs/2, hy - hs/2, hs, hs);
+      }
+    }
+
+    if (showLabelsState) {
+      const fontSize = Math.max(10, w * 0.06);
+      ctx.font = `600 ${fontSize}px 'Segoe UI', sans-serif`;
+      const tm = ctx.measureText(label);
+      const pad = 3;
+      const lx = x1;
+      const ly = Math.max(0, y1 - tm.actualBoundingBoxAscent - pad * 2);
+      const lw = tm.width + pad * 2;
+      const lh = tm.actualBoundingBoxAscent + tm.actualBoundingBoxDescent + pad * 2;
+
+      ctx.fillStyle = color;
+      ctx.fillRect(lx, ly, lw, lh);
+      ctx.fillStyle = label === 'No Tumor' ? '#000' : '#fff';
+      ctx.textBaseline = 'top';
+      ctx.fillText(label, lx + pad, ly + pad);
+
+      ctx.fillStyle = color + 'cc';
+      ctx.font = `10px 'Segoe UI', sans-serif`;
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(`${Math.round(w/scaleX)}\u00d7${Math.round(h/scaleY)}`, x1 + 4, y2 - 4);
+    }
+
+    ctx.restore();
+  }
+
+  if (isDrawingPolygon && polygonPoints.length > 0) {
+    const color = getSelectedColor();
+    ctx.save();
+    for (let i = 0; i < polygonPoints.length - 1; i++) {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(polygonPoints[i].x, polygonPoints[i].y);
+      ctx.lineTo(polygonPoints[i+1].x, polygonPoints[i+1].y);
+      ctx.stroke();
+    }
+    for (const p of polygonPoints) {
+      ctx.fillStyle = '#fff';
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+}
+
+// ── CLASS SELECTION ───────────────────────────────
+let activeClassIdx = 0;
+
+function setupClassGrid() {
+  const grid = $id('classGrid');
+  grid.innerHTML = '';
+  CLASSES.forEach((cls, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'class-btn' + (i === 0 ? ' active' : '');
+    btn.dataset.idx = i;
+    const color = CLASS_COLORS[cls] || '#888';
+    btn.innerHTML = `<span class="dot" style="background:${color}"></span> ${cls}`;
+    btn.style.borderColor = i === 0 ? color : 'transparent';
+    btn.onclick = () => selectClass(i);
+    grid.appendChild(btn);
+  });
+}
+
+function selectClass(idx) {
+  activeClassIdx = idx;
+  document.querySelectorAll('.class-btn').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+    const color = CLASS_COLORS[CLASSES[i]];
+    el.style.borderColor = i === idx ? color : 'transparent';
+  });
+  if (selectedBox >= 0 && selectedBox < labels.length) {
+    labels[selectedBox] = CLASSES[idx];
+    redraw();
+    updateBoxList();
+  }
+}
+
+function getActiveClassIdx() { return activeClassIdx; }
+function getSelectedColor() { return CLASS_COLORS[CLASSES[activeClassIdx]] || '#FF0000'; }
+
+// ── BOX LIST ──────────────────────────────────────
+function updateBoxList() {
+  const list = $id('boxList');
+  const count = $id('boxCount');
+  count.textContent = `(${boxes.length})`;
+
+  if (boxes.length === 0) {
+    list.innerHTML = `<div class="empty-boxes">Draw on the image to add annotations</div>`;
+    return;
+  }
+
+  list.innerHTML = '';
+  boxes.forEach((b, i) => {
+    const label = labels[i] || 'Unknown';
+    const color = CLASS_COLORS[label] || '#888';
+    const boxType = boxTypes[i] || 'rectangle';
+    const typeIcon = boxType === 'polygon' ? '&#11041;' : '&#9634;';
+    const coords = boxType === 'polygon'
+      ? `polygon \u00b7 ${(segmentations[i]?.points?.length || 0)} pts`
+      : `${b.x1},${b.y1} \u2192 ${b.x2},${b.y2} \u00b7 ${b.x2-b.x1}\u00d7${b.y2-b.y1}px`;
+    const div = document.createElement('div');
+    div.className = 'box-item' + (i === selectedBox ? ' active' : '');
+    div.style.borderColor = i === selectedBox ? color : 'var(--border)';
+    div.style.background = i === selectedBox ? color + '10' : 'var(--surface-alt)';
+    div.innerHTML = `
+      <div class="color-bar" style="background:${color}"></div>
+      <div>
+        <div class="box-label"><span class="box-type-icon">${typeIcon}</span>${label}</div>
+        <div class="box-coords">${coords}</div>
+      </div>
+      <button class="box-del" onclick="deleteBox(${i})" title="Delete">\u00d7</button>
+    `;
+    div.onclick = (e) => {
+      if (e.target.closest('.box-del')) return;
+      selectedBox = i;
+      redraw();
+      updateBoxList();
+    };
+    list.appendChild(div);
+  });
+}
+
+function deleteBox(idx) {
+  boxes.splice(idx, 1);
+  labels.splice(idx, 1);
+  boxTypes.splice(idx, 1);
+  segmentations.splice(idx, 1);
+  if (selectedBox === idx) selectedBox = -1;
+  else if (selectedBox > idx) selectedBox--;
+  redraw();
+  updateBoxList();
+  showToast('Annotation deleted', 'info');
+}
+
+function clearCurrentBoxes() {
+  if (boxes.length === 0) return;
+  boxes = []; labels = []; boxTypes = []; segmentations = [];
+  selectedBox = -1; polygonPoints = []; isDrawingPolygon = false;
+  redraw();
+  updateBoxList();
+  showToast('All annotations cleared', 'info');
+}
+
+function undoLast() {
+  if (boxes.length === 0) return;
+  deleteBox(boxes.length - 1);
+}
+
+// ── SAVE ──────────────────────────────────────────
+let autoSaveTimeout;
+
+async function autoSave() {
+  clearTimeout(autoSaveTimeout);
+  autoSaveTimeout = setTimeout(async () => {
+    try {
+      await fetch(`/api/save/${currentIdx}`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ boxes, labels, box_types: boxTypes, segmentations }),
+      });
+    } catch (err) { console.error('Auto-save error:', err); }
+  }, 1000);
+}
+
+async function saveAnnotation() {
+  const btn = $id('saveBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Saving...';
+
+  try {
+    const res = await fetch(`/api/save/${currentIdx}`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ boxes, labels, box_types: boxTypes, segmentations }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`Saved! (${data.total_annotated} total annotated)`, 'success');
+      await loadImageList();
+      updateProgress();
+    } else {
+      showToast('Error saving', 'error');
+    }
+  } catch (err) {
+    showToast('Error saving: ' + err.message, 'error');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '\uD83D\uDCBE Save';
+}
+
+// ── NAVIGATION ────────────────────────────────────
+function goImage(idx) {
+  if (idx < 0 || idx >= totalImages) return;
+  loadImage(idx);
+}
+
+function updateNav() {}
+
+// ── KEYBOARD ──────────────────────────────────────
+function setupKeyboard() {
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    switch (e.key) {
+      case 'ArrowLeft': goImage(currentIdx - 1); e.preventDefault(); break;
+      case 'ArrowRight': goImage(currentIdx + 1); e.preventDefault(); break;
+      case 's': case 'S': saveAnnotation(); e.preventDefault(); break;
+      case 'r': case 'R': setTool('rectangle'); e.preventDefault(); break;
+      case 'p': case 'P': setTool('polygon'); e.preventDefault(); break;
+      case '+': case '=': zoomIn(); e.preventDefault(); break;
+      case '-': zoomOut(); e.preventDefault(); break;
+      case 'Delete': case 'Backspace':
+        if (selectedBox >= 0) { deleteBox(selectedBox); e.preventDefault(); }
+        break;
+      case 'Escape':
+        if (isDrawingPolygon) { cancelPolygon(); showToast('Polygon cancelled', 'info'); }
+        selectedBox = -1; redraw(); updateBoxList();
+        e.preventDefault(); break;
+    }
+  });
+}
+
+// ── PROGRESS ──────────────────────────────────────
+function updateProgress() {
+  const annotated = images.filter(im => im.annotated).length;
+  const pct = totalImages ? (annotated / totalImages * 100) : 0;
+  $id('progressBar').style.width = Math.min(pct, 100) + '%';
+  $id('progressText').textContent = `${annotated} / ${totalImages}`;
+}
+
+// ── TOAST ─────────────────────────────────────────
+function showToast(msg, type = 'info') {
+  const container = $id('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  const icons = {success: '\u2705', error: '\u274C', info: '\u2139\uFE0F'};
+  toast.innerHTML = `${icons[type] || ''} ${msg}`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.animation = 'toastOut .3s ease-out forwards';
+    setTimeout(() => toast.remove(), 300);
+  }, 2500);
+}
+
+// ── MODAL ─────────────────────────────────────────
+function showModal(title, content, actions = '') {
+  const c = $id('modalContainer');
+  c.innerHTML = `
+    <div class="modal-overlay" onclick="if(event.target===this)closeModal()">
+      <div class="modal">
+        <h3>${title}</h3>
+        ${content}
+        <div class="modal-actions">${actions}</div>
+      </div>
+    </div>
+  `;
+}
+
+function closeModal() { $id('modalContainer').innerHTML = ''; }
+
+async function showAnnotations() {
+  const res = await fetch('/api/stats');
+  const stats = await res.json();
+  const annRes = await fetch('/api/export');
+  const annData = await annRes.json();
+  const content = `
+    <div class="ann-viewer">
+      <div style="margin-bottom:12px; display:flex; gap:16px;">
+        <div><strong>Total:</strong> ${stats.total}</div>
+        <div><strong>Annotated:</strong> ${stats.annotated}</div>
+        <div><strong>Remaining:</strong> ${stats.remaining}</div>
+        <div><strong>Progress:</strong> ${stats.progress_pct}%</div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <strong>By Class:</strong>
+        ${Object.entries(stats.by_class).map(([c, n]) =>
+          `<span style="display:inline-block;margin:2px 4px;padding:2px 8px;background:var(--surface-alt);border-radius:4px;">${c}: ${n}</span>`
+        ).join('')}
+      </div>
+      <pre>${JSON.stringify(annData, null, 2)}</pre>
+    </div>
+  `;
+  const actions = `<button class="btn" onclick="closeModal()">Close</button>`;
+  showModal('Saved Annotations', content, actions);
+}
+
+function exportAnnotations() {
+  window.open('/api/export', '_blank');
+  showToast('Exporting annotations JSON', 'info');
+}
+
+function exportYolo() {
+  window.open('/api/export_yolo', '_blank');
+  showToast('Exporting YOLO format annotations', 'info');
+}
+
+function showUploadModal() {
+  const content = `
+    <div style="margin-bottom:16px;">
+      <label style="display:block; margin-bottom:8px; font-weight:600; font-size:14px;">Upload MRI Images</label>
+      <div style="border:2px dashed var(--border); border-radius:var(--radius-sm); padding:32px 24px; text-align:center; cursor:pointer; background:var(--surface-alt);"
+           id="uploadDropZone"
+           ondrop="handleDropZone(event)"
+           ondragover="event.preventDefault(); event.currentTarget.style.background='var(--primary-light)'; event.currentTarget.style.borderColor='var(--primary)'"
+           ondragleave="event.currentTarget.style.background='var(--surface-alt)'; event.currentTarget.style.borderColor='var(--border)'">
+        <div style="font-size:32px; margin-bottom:12px;">📁</div>
+        <div style="font-size:14px; font-weight:600; margin-bottom:4px;">Drag &amp; drop images here</div>
+        <div style="font-size:12px; color:var(--text-secondary);">or click to browse</div>
+        <div style="font-size:11px; color:var(--text-secondary); margin-top:12px;">Supported: JPG, PNG, BMP</div>
+        <input type="file" id="uploadInput" multiple accept=".jpg,.jpeg,.png,.gif,.bmp"
+               style="display:none;" onchange="handleFileSelect(event)">
+      </div>
+    </div>
+    <div id="uploadProgress" style="display:none; margin-bottom:16px;">
+      <div style="font-size:13px; margin-bottom:8px; font-weight:600;">Uploading...</div>
+      <div style="width:100%; height:8px; background:var(--border); border-radius:4px; overflow:hidden;">
+        <div id="progressBar2" style="height:100%; background:var(--success); width:0%; transition:width 0.3s;"></div>
+      </div>
+    </div>
+  `;
+  const actions = `<button class="btn" onclick="closeModal()">Cancel</button>`;
+  showModal('Upload Images', content, actions);
+  $id('uploadDropZone').onclick = () => $id('uploadInput').click();
+}
+
+function handleDropZone(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  const dropZone = $id('uploadDropZone');
+  if (dropZone) {
+    dropZone.style.background = 'var(--surface-alt)';
+    dropZone.style.borderColor = 'var(--border)';
+  }
+  uploadImages(event.dataTransfer.files);
+}
+
+function handleFileSelect(event) { uploadImages(event.target.files); }
+
+async function uploadImages(fileList) {
+  if (fileList.length === 0) return;
+  const formData = new FormData();
+  for (let file of fileList) { formData.append('files', file); }
+  const uploadProgress = $id('uploadProgress');
+  if (uploadProgress) uploadProgress.style.display = 'block';
+  try {
+    const res = await fetch('/api/upload-images', { method: 'POST', body: formData });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`Uploaded ${data.uploaded} images! Total: ${data.total}`, 'success');
+      closeModal();
+      await loadImageList();
+      if (totalImages > 0) { currentIdx = 0; await loadImage(0); }
+    } else {
+      showToast('Error: ' + data.error, 'error');
+    }
+  } catch (err) {
+    showToast('Error: ' + err.message, 'error');
+    console.error('Upload error:', err);
+  } finally {
+    const up = $id('uploadProgress');
+    if (up) up.style.display = 'none';
+  }
+}
+
+// ── WINDOW RESIZE ─────────────────────────────────
+window.addEventListener('resize', () => {
+  if (mainImg && mainImg.complete && mainImg.naturalWidth) {
+    const container = $id('canvasContainer');
+    const containerW = container.clientWidth - 8;
+    const containerH = container.clientHeight - 8;
+    const natW = mainImg.naturalWidth;
+    const natH = mainImg.naturalHeight;
+    baseScale = Math.min(1, containerW / natW, containerH / natH);
+    applyZoom();
+  }
+});
+
+// ── START ─────────────────────────────────────────
+init();
+</script>
+</body>
+</html>

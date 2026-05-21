@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TumorTracer — AI Prediction</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --primary: #1a73e8;
+  --primary-dark: #1557b0;
+  --primary-light: #e8f0fe;
+  --bg: #f0f4f9;
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --text: #1f2937;
+  --text-secondary: #6b7280;
+  --border: #e5e7eb;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.06);
+  --shadow-lg: 0 10px 40px rgba(0,0,0,.12);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* ── Header ── */
+.header {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 0 28px; height: 58px; display: flex; align-items: center;
+  justify-content: space-between; position: sticky; top: 0; z-index: 100;
+  box-shadow: var(--shadow);
+}
+.header-left { display: flex; align-items: center; gap: 12px; }
+.logo {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: linear-gradient(135deg, #1a73e8, #4f46e5);
+  display: flex; align-items: center; justify-content: center; font-size: 20px;
+}
+.header h1 { font-size: 18px; font-weight: 700; }
+.badge {
+  background: var(--primary-light); color: var(--primary);
+  padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;
+}
+.header-right { display: flex; align-items: center; gap: 8px; }
+.btn-link {
+  padding: 7px 14px; border-radius: var(--radius-sm); font-size: 12px;
+  font-weight: 600; font-family: var(--font); border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); cursor: pointer;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+  transition: all .2s;
+}
+.btn-link:hover { background: var(--surface-alt); transform: translateY(-1px); box-shadow: var(--shadow); }
+
+/* ── Layout ── */
+.page { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+@media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+
+/* ── Cards ── */
+.card {
+  background: var(--surface); border-radius: var(--radius);
+  border: 1px solid var(--border); box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.card-header {
+  padding: 18px 22px 14px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.card-header h2 { font-size: 15px; font-weight: 700; }
+.card-header .icon { font-size: 20px; }
+.card-body { padding: 22px; }
+
+/* ── Upload Zone ── */
+.upload-zone {
+  border: 2px dashed var(--border); border-radius: var(--radius-sm);
+  padding: 40px 20px; text-align: center; cursor: pointer;
+  transition: all .2s; background: var(--surface-alt);
+  position: relative;
+}
+.upload-zone:hover, .upload-zone.drag-over {
+  border-color: var(--primary); background: var(--primary-light);
+}
+.upload-zone input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.upload-icon { font-size: 40px; margin-bottom: 12px; }
+.upload-zone h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.upload-zone p { font-size: 12px; color: var(--text-secondary); }
+
+/* ── Preview ── */
+.preview-wrap {
+  border-radius: var(--radius-sm); overflow: hidden;
+  background: #1e293b; display: flex; align-items: center;
+  justify-content: center; min-height: 260px; position: relative;
+}
+.preview-wrap img {
+  max-width: 100%; max-height: 340px; object-fit: contain; display: block;
+}
+.preview-placeholder {
+  color: #64748b; text-align: center; padding: 40px 20px;
+}
+.preview-placeholder .ph-icon { font-size: 48px; margin-bottom: 12px; }
+.preview-placeholder p { font-size: 13px; }
+
+/* ── Predict Button ── */
+.btn-predict {
+  width: 100%; padding: 14px; border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--primary), #4f46e5);
+  color: #fff; font-size: 15px; font-weight: 700; font-family: var(--font);
+  border: none; cursor: pointer; margin-top: 16px;
+  transition: all .2s; display: flex; align-items: center;
+  justify-content: center; gap: 8px;
+}
+.btn-predict:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,115,232,.35); }
+.btn-predict:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-predict .spinner {
+  width: 18px; height: 18px; border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff; border-radius: 50%;
+  animation: spin .7s linear infinite; display: none;
+}
+.btn-predict.loading .spinner { display: block; }
+.btn-predict.loading .btn-text { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Result Card ── */
+.result-hidden { display: none; }
+.result-top {
+  border-radius: var(--radius-sm); padding: 20px;
+  display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
+}
+.result-icon { font-size: 44px; }
+.result-label { font-size: 26px; font-weight: 800; line-height: 1.1; }
+.result-conf { font-size: 14px; font-weight: 600; opacity: .85; margin-top: 4px; }
+.result-info { font-size: 12px; margin-top: 6px; opacity: .8; line-height: 1.5; }
+
+/* ── Probability Bars ── */
+.prob-list { display: flex; flex-direction: column; gap: 10px; }
+.prob-item { }
+.prob-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+.prob-name { font-size: 13px; font-weight: 600; }
+.prob-pct { font-size: 13px; font-weight: 700; }
+.prob-bar-bg {
+  height: 10px; background: #f1f5f9; border-radius: 5px; overflow: hidden;
+}
+.prob-bar-fill {
+  height: 100%; border-radius: 5px;
+  transition: width .8s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── Class Info Cards ── */
+.class-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+.class-card {
+  padding: 14px; border-radius: var(--radius-sm); border: 2px solid transparent;
+  background: var(--surface-alt); transition: all .2s;
+}
+.class-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.class-card .cc-dot {
+  width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 6px;
+}
+.class-card .cc-name { font-size: 13px; font-weight: 700; }
+.class-card .cc-desc { font-size: 11px; color: var(--text-secondary); margin-top: 5px; line-height: 1.4; }
+
+/* ── History ── */
+.history-list { display: flex; flex-direction: column; gap: 8px; max-height: 320px; overflow-y: auto; }
+.history-item {
+  display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+  border-radius: var(--radius-sm); border: 1px solid var(--border);
+  background: var(--surface-alt); cursor: pointer; transition: all .2s;
+}
+.history-item:hover { border-color: var(--primary); background: var(--primary-light); }
+.history-thumb {
+  width: 44px; height: 44px; border-radius: 6px; object-fit: cover;
+  background: #e5e7eb; flex-shrink: 0;
+}
+.history-info { flex: 1; min-width: 0; }
+.history-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.history-pred { font-size: 11px; font-weight: 700; margin-top: 2px; }
+.history-conf { font-size: 11px; color: var(--text-secondary); }
+.history-empty { color: var(--text-secondary); font-size: 12px; text-align: center; padding: 20px; }
+
+/* ── Toast ── */
+.toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 1000; display: flex; flex-direction: column; gap: 8px; }
+.toast {
+  padding: 10px 18px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500;
+  color: #fff; box-shadow: var(--shadow-lg); animation: toastIn .3s ease-out;
+  display: flex; align-items: center; gap: 8px;
+}
+.toast-success { background: var(--success); }
+.toast-error   { background: var(--danger); }
+.toast-info    { background: var(--primary); }
+@keyframes toastIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+/* ── Misc ── */
+.section-title { font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px; }
+.divider { height: 1px; background: var(--border); margin: 18px 0; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-left">
+    <div class="logo">🧠</div>
+    <h1>TumorTracer</h1>
+    <span class="badge">AI Prediction</span>
+  </div>
+  <div class="header-right">
+    <a href="http://127.0.0.1:5050" class="btn-link">✏️ Annotation Tool</a>
+  </div>
+</header>
+
+<div class="page">
+  <div class="grid">
+
+    <!-- ── LEFT: Upload + Preview ── -->
+    <div style="display:flex; flex-direction:column; gap:20px;">
+
+      <!-- Upload Card -->
+      <div class="card">
+        <div class="card-header">
+          <span class="icon">⬆️</span>
+          <h2>Upload MRI Scan</h2>
+        </div>
+        <div class="card-body">
+          <div class="upload-zone" id="uploadZone">
+            <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.bmp" onchange="handleFile(this.files[0])">
+            <div class="upload-icon">🧠</div>
+            <h3>Drop your MRI image here</h3>
+            <p>or click to browse · JPG, PNG supported</p>
+          </div>
+          <button class="btn-predict" id="predictBtn" onclick="runPrediction()" disabled>
+            <div class="spinner"></div>
+            <span class="btn-text">🔍 Analyze Image</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Preview Card -->
+      <div class="card">
+        <div class="card-header">
+          <span class="icon">🖼️</span>
+          <h2>Image Preview</h2>
+          <span id="previewFilename" style="font-size:11px; color:var(--text-secondary); margin-left:auto;"></span>
+        </div>
+        <div class="card-body" style="padding:14px;">
+          <div class="preview-wrap" id="previewWrap">
+            <div class="preview-placeholder">
+              <div class="ph-icon">🧠</div>
+              <p>Upload an MRI scan to preview</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── RIGHT: Results + History ── -->
+    <div style="display:flex; flex-direction:column; gap:20px;">
+
+      <!-- Result Card -->
+      <div class="card">
+        <div class="card-header">
+          <span class="icon">📊</span>
+          <h2>Prediction Result</h2>
+        </div>
+        <div class="card-body">
+
+          <!-- Empty state -->
+          <div id="resultEmpty" style="text-align:center; padding:30px 0; color:var(--text-secondary);">
+            <div style="font-size:40px; margin-bottom:10px;">🔬</div>
+            <p style="font-size:13px;">Upload and analyze an image to see results</p>
+          </div>
+
+          <!-- Result content -->
+          <div id="resultContent" class="result-hidden">
+            <!-- Top prediction banner -->
+            <div class="result-top" id="resultBanner">
+              <div class="result-icon" id="resultIcon">🧠</div>
+              <div>
+                <div class="result-label" id="resultLabel">-</div>
+                <div class="result-conf" id="resultConf">-</div>
+                <div class="result-info" id="resultInfo">-</div>
+              </div>
+            </div>
+
+            <!-- All class probabilities -->
+            <div class="section-title">All Class Probabilities</div>
+            <div class="prob-list" id="probList"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- History Card -->
+      <div class="card">
+        <div class="card-header">
+          <span class="icon">🕓</span>
+          <h2>Recent Predictions</h2>
+          <button onclick="clearHistory()" style="margin-left:auto; background:none; border:none; cursor:pointer; font-size:11px; color:var(--text-secondary);">Clear</button>
+        </div>
+        <div class="card-body" style="padding:14px;">
+          <div class="history-list" id="historyList">
+            <div class="history-empty">No predictions yet</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Class Info -->
+  <div class="card" style="margin-top:24px;">
+    <div class="card-header">
+      <span class="icon">ℹ️</span>
+      <h2>About the Classes</h2>
+    </div>
+    <div class="card-body">
+      <div class="class-cards">
+        <div class="class-card" style="border-color:#ef444440;">
+          <div><span class="cc-dot" style="background:#ef4444;"></span><span class="cc-name" style="color:#ef4444;">Glioma</span></div>
+          <div class="cc-desc">A malignant tumor originating from glial cells in the brain or spine. Most common primary brain tumor.</div>
+        </div>
+        <div class="class-card" style="border-color:#10b98140;">
+          <div><span class="cc-dot" style="background:#10b981;"></span><span class="cc-name" style="color:#10b981;">Meningioma</span></div>
+          <div class="cc-desc">Tumor arising from the meninges — the membranes surrounding the brain and spinal cord. Usually benign.</div>
+        </div>
+        <div class="class-card" style="border-color:#f59e0b40;">
+          <div><span class="cc-dot" style="background:#f59e0b;"></span><span class="cc-name" style="color:#f59e0b;">No Tumor</span></div>
+          <div class="cc-desc">No tumor detected. The brain scan appears normal with no abnormal growths visible.</div>
+        </div>
+        <div class="class-card" style="border-color:#3b82f640;">
+          <div><span class="cc-dot" style="background:#3b82f6;"></span><span class="cc-name" style="color:#3b82f6;">Pituitary</span></div>
+          <div class="cc-desc">Tumor in the pituitary gland at the base of the brain. Usually benign and slow-growing.</div>
+        </div>
+      </div>
+      <div style="margin-top:16px; padding:12px; background:#fef9c3; border-radius:var(--radius-sm); border:1px solid #fde68a;">
+        <p style="font-size:11px; color:#92400e; line-height:1.6;">
+          ⚠️ <strong>Medical Disclaimer:</strong> This tool is for educational and research purposes only.
+          It is not a substitute for professional medical diagnosis. Always consult a qualified medical professional for any health concerns.
+          Model accuracy: <strong>95.81%</strong> on test set (EfficientNet-B0, 5600 training images).
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ── State ─────────────────────────────────────────────────────────────────────
+let selectedFile = null;
+let history = [];
+
+const CLASS_ICONS = {
+  glioma:     '🔴',
+  meningioma: '🟢',
+  notumor:    '🟡',
+  pituitary:  '🔵',
+};
+
+// ── File handling ─────────────────────────────────────────────────────────────
+function handleFile(file) {
+  if (!file) return;
+  selectedFile = file;
+
+  // Show preview
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    document.getElementById('previewWrap').innerHTML =
+      `<img src="${e.target.result}" alt="MRI Preview">`;
+    document.getElementById('previewFilename').textContent = file.name;
+  };
+  reader.readAsDataURL(file);
+
+  // Enable predict button
+  document.getElementById('predictBtn').disabled = false;
+  showToast('Image loaded — click Analyze to predict', 'info');
+}
+
+// Drag and drop
+const zone = document.getElementById('uploadZone');
+zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('drag-over'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+zone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  zone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) handleFile(file);
+});
+
+// ── Run prediction ────────────────────────────────────────────────────────────
+async function runPrediction() {
+  if (!selectedFile) return;
+
+  const btn = document.getElementById('predictBtn');
+  btn.disabled = true;
+  btn.classList.add('loading');
+
+  const formData = new FormData();
+  formData.append('file', selectedFile);
+
+  try {
+    const res = await fetch('/api/predict', { method: 'POST', body: formData });
+    const data = await res.json();
+
+    if (!data.success) {
+      showToast(data.error || 'Prediction failed', 'error');
+      return;
+    }
+
+    showResult(data);
+    addToHistory(data);
+    showToast(`Predicted: ${data.prediction.display} (${data.prediction.prob}%)`, 'success');
+
+  } catch (err) {
+    showToast('Server error — is predict_app.py running?', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.classList.remove('loading');
+  }
+}
+
+// ── Show result ───────────────────────────────────────────────────────────────
+function showResult(data) {
+  const pred = data.prediction;
+
+  document.getElementById('resultEmpty').style.display = 'none';
+  document.getElementById('resultContent').classList.remove('result-hidden');
+
+  // Banner
+  const banner = document.getElementById('resultBanner');
+  banner.style.background = pred.color + '18';
+  banner.style.border = `2px solid ${pred.color}40`;
+  banner.style.borderRadius = '10px';
+
+  document.getElementById('resultIcon').textContent  = CLASS_ICONS[pred.class] || '🧠';
+  document.getElementById('resultLabel').textContent = pred.display;
+  document.getElementById('resultLabel').style.color = pred.color;
+  document.getElementById('resultConf').textContent  = `Confidence: ${pred.prob}%`;
+  document.getElementById('resultConf').style.color  = pred.color;
+  document.getElementById('resultInfo').textContent  = pred.info;
+
+  // Probability bars
+  const list = document.getElementById('probList');
+  list.innerHTML = data.all.map(item => `
+    <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-name">${CLASS_ICONS[item.class]} ${item.display}</span>
+        <span class="prob-pct" style="color:${item.color}">${item.prob}%</span>
+      </div>
+      <div class="prob-bar-bg">
+        <div class="prob-bar-fill" style="width:0%; background:${item.color};"
+             data-width="${item.prob}"></div>
+      </div>
+    </div>
+  `).join('');
+
+  // Animate bars after render
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.prob-bar-fill').forEach(bar => {
+      bar.style.width = bar.dataset.width + '%';
+    });
+  });
+}
+
+// ── History ───────────────────────────────────────────────────────────────────
+function addToHistory(data) {
+  history.unshift({
+    filename: data.filename,
+    image:    data.image_b64,
+    pred:     data.prediction,
+    all:      data.all,
+  });
+  if (history.length > 10) history.pop();
+  renderHistory();
+}
+
+function renderHistory() {
+  const list = document.getElementById('historyList');
+  if (history.length === 0) {
+    list.innerHTML = '<div class="history-empty">No predictions yet</div>';
+    return;
+  }
+  list.innerHTML = history.map((item, i) => `
+    <div class="history-item" onclick="reloadHistory(${i})">
+      <img class="history-thumb" src="data:image/jpeg;base64,${item.image}" alt="">
+      <div class="history-info">
+        <div class="history-name">${item.filename}</div>
+        <div class="history-pred" style="color:${item.pred.color}">
+          ${CLASS_ICONS[item.pred.class]} ${item.pred.display}
+        </div>
+        <div class="history-conf">${item.pred.prob}% confidence</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function reloadHistory(i) {
+  const item = history[i];
+  // Show image in preview
+  document.getElementById('previewWrap').innerHTML =
+    `<img src="data:image/jpeg;base64,${item.image}" alt="MRI Preview">`;
+  document.getElementById('previewFilename').textContent = item.filename;
+  // Show result
+  showResult({ prediction: item.pred, all: item.all });
+}
+
+function clearHistory() {
+  history = [];
+  renderHistory();
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+function showToast(msg, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.textContent = msg;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 3500);
+}
+
+// ── Keyboard shortcut: Enter to predict ──────────────────────────────────────
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && selectedFile) runPrediction();
+});
+</script>
+</body>
+</html>
