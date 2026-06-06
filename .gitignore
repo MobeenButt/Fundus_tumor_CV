@@ -1,0 +1,182 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+env/
+ENV/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Dataset & images
+dataset/
+datasets/
+data/
+images/
+train/
+test/
+valid/
+labels/
+
+# Flask annotator data
+flask_annotator/uploaded_images/
+flask_annotator/annotated_images/
+flask_annotator/annotations_flask.json
+
+# Models / weights
+model/
+models/
+weights/
+*.pth
+*.pt
+*.h5
+*.ckpt
+
+# Results / outputs
+runs/
+results/
+predictions/
+output/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+*.h5
+
+# Results / outputs
+runs/
+results/
+predictions/
+output/
+# Logs
+*.log
+# OS
+.DS_Store
+Thumbs.db
+# Data directories
+/data
+/annotations/images
+/annotations/labels
+
+# Flask annotator - generated/uploaded files
+/flask_annotator/annotated_images
+/flask_annotator/uploaded_images
+/flask_annotator/__pycache__
+/flask_annotator/annotations_flask.json
+/flask_annotator/.vscode
+
+# Model - trained weights, results, outputs
+/model/best_model.pth
+/model/confusion_matrix.png
+/model/fundus_tumor_training.ipynb
+/model/history.json
+/model/metrics.txt
+/model/per_class_accuracy.png
+/model/test_results_*.json
+/model/training_curves.png
+/model/visual_test.png
+/model/results
+/model/classification/fundus_tumor_results
+/model/__pycache__
+
+# Object detection - trained weights, results, outputs
+/Object detection/detected_images
+/Object detection/yolo_annotations
+/Object detection/best.pt
+/Object detection/confusion_matrix*.png
+/Object detection/results.png
+/Object detection/val_batch0_pred.jpg
+/Object detection/yolo_predictions.png
+/Object detection/report.pdf
+/Object detection/__pycache__
+flask_annotator/uploaded_images/
+flask_annotator/annotated_images/
+model/
+dataset/
+datasets/
+data/
+*.pth
+*.pt
+*.h5
+__pycache__/
+.ipynb_checkpoints/
+# Segmentation results - trained weights, outputs
+/Segmentation_Results/best_unet.pth
+/Segmentation_Results/Segmentation_2023-CS-28
+/Segmentation_Results/Segmentation_2023-CS-28.zip
+/Segmentation_Results/__pycache__
+
+# YOLO Results - trained weights, outputs
+/YOLO_Results/detected_images
+/YOLO_Results/best.pt
+/YOLO_Results/confusion_matrix*.png
+/YOLO_Results/results.png
+/YOLO_Results/val_batch0_pred.jpg
+/YOLO_Results/yolo_predictions.png
+/YOLO_Results/__pycache__
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+.mypy_cache
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints
+
+# Environment
+.env
+.venv
+venv/
+ENV/
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large model files
+*.pth
+*.pt
+*.onnx
+*.h5
+*.weights
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Images (output/results)
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.tif
+*.webp

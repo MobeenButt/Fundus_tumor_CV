@@ -1,0 +1,18 @@
+{
+  "mAP50": 0.9855,
+  "mAP50_95": 0.79,
+  "precision": 0.9691,
+  "recall": 0.9639,
+  "per_class_ap50": {
+    "Choroidal Hemangioma (CH)": 0.9746,
+    "Choroidal Osteoma (CO)": 0.9937,
+    "Normal": 0.9945,
+    "Retinal Capillary Hemangioma (RCH)": 0.9945,
+    "Retinoblastoma (RB)": 0.9682,
+    "Uveal Melanoma (UM)": 0.9876
+  },
+  "model": "YOLOv8n",
+  "epochs": 50,
+  "img_size": 640,
+  "labels": "GradCAM auto-generated"
+}
